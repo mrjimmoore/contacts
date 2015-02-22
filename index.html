@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html ng-app="myApp">
+
+<head lang='en'>
+    <noscript><meta http-equiv="refresh" content="0; URL=noscript.html"/></noscript>
+    <meta charset="UTF-8" />
+    <title>Contacts</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" />
+    <script src="https://code.angularjs.org/1.3.13/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.3.13/angular-route.min.js"></script>
+    <script src="https://code.angularjs.org/1.3.13/angular-resource.min.js"></script>
+    <script src="script.js"></script>
+</head>
+
+
+<body ng-controller="mainController">
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <h3 class="navbar-text">SPA Example <small>using HTML5, AngularJS, Node.js, and MongoDB</small></h3>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#listContacts"><i class="fa fa-users"></i> Contacts</a></li>
+                <li><a href="#home"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="#about"><i class="fa fa-info"></i> About</a></li>
+                <li><a href="#help"><i class="fa fa-comment"></i> Help</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Contacts <a href="#addContact" class='fa fa-user-plus'></a></h1>
+            <p>Lorem ipsum potenti odio imperdiet tempor pulvinar metus, per imperdiet nulla mauris pharetra elementum orci, erat lectus bibendum et himenaeos platea interdum turpis elementum nibh interdum rutrum sagittis congue dolor blandit, condimentum mattis imperdiet mi nulla habitasse pellentesque aliquam, sociosqu magna ultricies nam quis phasellus fusce ultrices.</p>
+        </div>
+    </header>
+
+    <main ng-view></main>
+
+    <hr>
+    
+    <footer class="container" ng-controller="footerController">
+        <p>&copy; My Company {{ currentDate | date:'yyyy' }}</p>
+    </footer>
+    
+</body>
+
+</html>
