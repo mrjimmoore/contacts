@@ -19,7 +19,7 @@
     
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <h3 class="navbar-text">SPA Example <small>using HTML5, AngularJS, Node.js, and MongoDB</small></h3>
+            <h3 class="navbar-text">{{ bannerTitle }} <small>{{ bannerSubTitle }}</small></h3>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#listContacts"><i class="fa fa-users"></i> Contacts</a></li>
                 <li><a href="#home"><i class="fa fa-home"></i> Home</a></li>
@@ -31,8 +31,8 @@
     
     <header class="jumbotron">
         <div class="container">
-            <h1>Contacts <a href="#addContact" class='fa fa-user-plus'></a></h1>
-            <p>Lorem ipsum potenti odio imperdiet tempor pulvinar metus, per imperdiet nulla mauris pharetra elementum orci, erat lectus bibendum et himenaeos platea interdum turpis elementum nibh interdum rutrum sagittis congue dolor blandit, condimentum mattis imperdiet mi nulla habitasse pellentesque aliquam, sociosqu magna ultricies nam quis phasellus fusce ultrices.</p>
+            <h1>{{ pageTitle }} <a href="#addContact" class='fa fa-user-plus'></a></h1>
+            <p>{{ pageMessage }}</p>
         </div>
     </header>
 
@@ -40,7 +40,7 @@
 
     <hr>
     
-    <footer class="container" ng-controller="footerController">
+    <footer class="container">
         <p>&copy; My Company {{ currentDate | date:'yyyy' }}</p>
     </footer>
     
