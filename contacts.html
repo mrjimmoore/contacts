@@ -1,0 +1,25 @@
+<article>
+    
+	<section class="container">
+
+        <table class='table table-striped'>
+            <thead>
+                <tr>
+                    <th>delete</th>
+                    <th>fullname</th>
+                    <th>email</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr ng-repeat='contact in contacts'>
+                    <td><a href="#deleteContact" class='fa fa-times' ng-click='deleteContact(contact._id)'></a></td>
+                    <td><a href="#editContact/{{ contact._id }}" class="navbar-link" >{{ contact.fullname }}</a></td>
+                    <td>{{ contact.email }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+	</section>
+    
+</article>
