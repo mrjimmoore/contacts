@@ -17,14 +17,12 @@ app.config(function ($routeProvider) {
 
 // controllers
 
-app.controller('footerController', function ($scope) {
-    $scope.currentDate = new Date();
-});
-
 app.controller('mainController', function ($scope) {
-    $scope.addContact = function() {
-        alert('Add is not ready yet.');
-    };
+    $scope.bannerTitle = 'SPA Example';
+    $scope.bannerSubTitle = 'using HTML5, AngularJS, Node.js, and MongoDB';
+    $scope.pageTitle = 'Contacts';
+    $scope.pageMessage = 'Lorem ipsum potenti odio imperdiet tempor pulvinar metus, per imperdiet nulla mauris pharetra elementum orci, erat lectus bibendum et himenaeos platea interdum turpis elementum nibh interdum rutrum sagittis congue dolor blandit, condimentum mattis imperdiet mi nulla habitasse pellentesque aliquam, sociosqu magna ultricies nam quis phasellus fusce ultrices.';
+    $scope.currentDate = new Date();
 });
 
 app.controller('homeController', function ($scope) {
@@ -41,6 +39,10 @@ app.controller('helpController', function ($scope) {
 
 app.controller('addContactController', function ($scope) {
     $scope.message = 'Add New Contact'
+
+    $scope.saveContact = function() {
+        alert('Save is not ready yet.');
+    };
 });
 
 app.controller('listContactsController', function ($scope, $http) {
