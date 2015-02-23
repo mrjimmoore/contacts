@@ -1,15 +1,15 @@
 {
-  'name': 'NodeJsRestApi',
-  'version': '0.0.1',
-  'description': 'Contacts example REST API using Restify and MongoDB',
-  'main': 'server.js',
-  'scripts': {
-    'test': 'echo \'Error: no test specified\' && exit 1'
+  "name": "NodeJsRestApi",
+  "version": "0.0.1",
+  "description": "Contacts example REST API using Restify and MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  'author': 'Jim Moore',
-  'license': 'ISC',
-  'devDependencies': {
-    'mongojs': '^0.18.1',
-    'restify': '^2.8.5'
+  "author": "Jim Moore",
+  "license": "ISC",
+  "devDependencies": {
+    "mongojs": "^0.18.1",
+    "restify": "^2.8.5"
   }
 }
