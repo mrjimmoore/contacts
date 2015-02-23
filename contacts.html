@@ -1,6 +1,6 @@
 <article>
     
-	<section class="container">
+	<section class='container'>
 
         <table class='table table-striped'>
             <thead>
@@ -13,8 +13,8 @@
             
             <tbody>
                 <tr ng-repeat='contact in contacts'>
-                    <td><a href="#deleteContact" class='fa fa-times' ng-click='deleteContact(contact._id)'></a></td>
-                    <td><a href="#editContact/{{ contact._id }}" class="navbar-link" >{{ contact.fullname }}</a></td>
+                    <td><a href='/deleteContact/{{ contact._id }}' class='fa fa-times'></a></td>
+                    <td><a href='/editContact/{{ contact._id }}' class='navbar-link' >{{ contact.fullname }}</a></td>
                     <td>{{ contact.email }}</td>
                 </tr>
             </tbody>
