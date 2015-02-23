@@ -20,7 +20,7 @@ server
 //    })
 //})
 
-server.get("/contact", function (req, res, next) {
+server.get('/contact', function (req, res, next) {
     db.contact.find(function (err, data) {
         res.writeHead(200, {
             'Content-Type': 'application/json; charset=utf-8'
