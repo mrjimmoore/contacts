@@ -14,12 +14,6 @@ server
     .use(restify.bodyParser())
 ;
 
-//server.get('/contact', function(req, res, next) {
-//    db.contact.find({}, function(error, contacts) {
-//        res.send(contacts);
-//    })
-//})
-
 server.get('/contact', function (req, res, next) {
     db.contact.find(function (err, data) {
         res.writeHead(200, {
@@ -31,8 +25,9 @@ server.get('/contact', function (req, res, next) {
 });
 
 server.get('/contact/:_id', function (req, res, next) {
+    var ObjectId = mongojs.ObjectId;
     db.contact.findOne({
-        _id: req.params._id
+        _id: ObjectId(req.params._id)
     }, function (err, data) {
         res.writeHead(200, {
             'Content-Type': 'application/json; charset=utf-8'

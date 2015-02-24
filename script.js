@@ -57,11 +57,11 @@ mainApp.controller('listContactsController', function ($scope, $http) {
 
 mainApp.controller('editContactController', function ($scope, $http, $routeParams) {
     $http.get('http://localhost:3000/contact/' + $routeParams._id)
-        .success(function(data, status, headers, config, statusText) { alert(data); $scope.contact = data; })
+        .success(function(data, status, headers, config, statusText) { alert($routeParams._id + '\n' + data); $scope.contact = data; })
         .error(function(data, status, headers, config, statusText) { alert('Error executing http get document.'); }) ;
 
     $scope.message = 'Update Contact'
-    
+
     $scope.saveContact = function() {
         alert('Save is not ready yet.');
     };
