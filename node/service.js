@@ -16,9 +16,7 @@ server
 
 server.get('/contact', function (req, res, next) {
     db.contact.find(function (err, data) {
-        res.writeHead(200, {
-            'Content-Type': 'application/json; charset=utf-8'
-        });
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
         res.end(JSON.stringify(data));
     });
     return next();
@@ -26,12 +24,8 @@ server.get('/contact', function (req, res, next) {
 
 server.get('/contact/:_id', function (req, res, next) {
     var ObjectId = mongojs.ObjectId;
-    db.contact.findOne({
-        _id: ObjectId(req.params._id)
-    }, function (err, data) {
-        res.writeHead(200, {
-            'Content-Type': 'application/json; charset=utf-8'
-        });
+    db.contact.findOne({ _id: ObjectId(req.params._id) }, function (err, data) {
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
         res.end(JSON.stringify(data));
     });
     return next();
@@ -39,39 +33,25 @@ server.get('/contact/:_id', function (req, res, next) {
 
 server.post('/contact', function (req, res, next) {
     var contact = req.params;
-    db.contact.save(contact,
-        function (err, data) {
-            res.writeHead(200, {
-                'Content-Type': 'application/json; charset=utf-8'
-            });
-            res.end(JSON.stringify(data));
-        });
+    db.contacts.save(contact, function (err, data) {
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify(data));
+    });
     return next();
 });
 
 server.put('/contact/:_id', function (req, res, next) {
-    // get the existing contact
-    db.contact.findOne({
-        _id: req.params._id
-    }, function (err, data) {
-        // merge req.params/contact with the server/contact
-
-        var updProd = {}; // updated contact
-        // logic similar to jQuery.extend(); to merge 2 objects.
+    var ObjectId = mongojs.ObjectId;
+    db.contact.findOne({ _id: ObjectId(req.params._id) }, function (err, data) {
+        var updProd = {};
         for (var n in data) {
             updProd[n] = data[n];
         }
         for (var n in req.params) {
             updProd[n] = req.params[n];
         }
-        db.contact.update({
-            _id: req.params._id
-        }, updProd, {
-            multi: false
-        }, function (err, data) {
-            res.writeHead(200, {
-                'Content-Type': 'application/json; charset=utf-8'
-            });
+        db.contact.update({ _id: ObjectId(req.params._id) }, updProd, { multi: false }, function (err, data) {
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
             res.end(JSON.stringify(data));
         });
     });
@@ -79,12 +59,9 @@ server.put('/contact/:_id', function (req, res, next) {
 });
 
 server.del('/contact/:_id', function (req, res, next) {
-    db.contact.remove({
-        _id: req.params._id
-    }, function (err, data) {
-        res.writeHead(200, {
-            'Content-Type': 'application/json; charset=utf-8'
-        });
+    var ObjectId = mongojs.ObjectId;
+    db.contact.remove({ _id: ObjectId(req.params._id) }, function (err, data) {
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
         res.end(JSON.stringify(true));
     });
     return next();

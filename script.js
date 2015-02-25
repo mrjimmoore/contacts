@@ -40,29 +40,41 @@ mainApp.controller('helpController', function ($scope) {
     $scope.message = 'Help page message...';
 });
 
-mainApp.controller('addContactController', function ($scope) {
-    $scope.message = 'Add New Contact'
-
-    $scope.saveContact = function() {
-        alert('Save is not ready yet.');
-    };
-});
-
 mainApp.controller('listContactsController', function ($scope, $http) {
     $http.get('http://localhost:3000/contact')
         .success(function(data, status, headers, config, statusText) { $scope.contacts = data; })
-        .error(function(data, status, headers, config, statusText) { alert('Error executing http get collection.'); }) ;
+        .error(function(data, status, headers, config, statusText) { alert('Error executing http get collection.'); });
 
+    $scope.deleteContact = function(_id) {
+        $http.delete('http://localhost:3000/contact/' + _id)
+            .success(function(data, status, headers, config, statusText) {  })
+            .error(function(data, status, headers, config, statusText) { alert('Error executing http delete document.'); });
+    };
+});
+
+mainApp.controller('addContactController', function ($scope) {
+    $scope.saveContact = function() {
+        $http.post('http://localhost:3000/contact', $scope.contact)
+            .success(function(data) { $scope.contact = data; })
+            .error(function(data, status, headers, config, statusText) { alert('Error executing http get document.'); });
+    };
+
+    $scope.message = 'Add New Contact';
 });
 
 mainApp.controller('editContactController', function ($scope, $http, $routeParams) {
     $http.get('http://localhost:3000/contact/' + $routeParams._id)
-        .success(function(data, status, headers, config, statusText) { alert($routeParams._id + '\n' + data); $scope.contact = data; })
-        .error(function(data, status, headers, config, statusText) { alert('Error executing http get document.'); }) ;
+        .success(function(data, status, headers, config, statusText) { $scope.contact = data; })
+        .error(function(data, status, headers, config, statusText) { alert('Error executing http get document.'); });
 
-    $scope.message = 'Update Contact'
+    $scope.message = 'Update Contact';
 
     $scope.saveContact = function() {
-        alert('Save is not ready yet.');
+        $http.put('http://localhost:3000/contact/' + $routeParams._id)
+            .success(function(data, status, headers, config, statusText) { $scope.contact = data; })
+            .error(function(data, status, headers, config, statusText) { alert('Error executing http get document.'); });
+        $http.get('http://localhost:3000/contact/' + $routeParams._id)
+            .success(function(data, status, headers, config, statusText) { $scope.contact = data; })
+            .error(function(data, status, headers, config, statusText) { alert('Error executing http get document.'); });
     };
 });
