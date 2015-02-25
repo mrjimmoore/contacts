@@ -7,7 +7,7 @@ var mainApp = angular.module('mainApp', ['ngRoute']);
 mainApp.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', { templateUrl: 'home.html', controller: 'homeController' })
-        .when('/about', { templateUrl: '/about.html', controller: 'aboutController' })
+        .when('/about', { templateUrl: 'about.html', controller: 'aboutController' })
         .when('/help', { templateUrl: 'help.html', controller: 'helpController' })
         .when('/addContact', { templateUrl: 'contact.html', controller: 'addContactController' })
         .when('/listContacts', { templateUrl: 'contacts.html', controller: 'listContactsController' })
@@ -15,7 +15,7 @@ mainApp.config(function ($routeProvider, $locationProvider) {
         .otherwise({ templateUrl: 'home.html', controller: 'homeController' });
 
     $locationProvider.html5Mode(true);
-    //$locationProvider.hashPrefix('!')
+    $locationProvider.hashPrefix('!')
 });
 
 // controllers
