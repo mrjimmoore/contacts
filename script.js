@@ -40,16 +40,10 @@ mainApp.controller('helpController', function ($scope) {
 });
 
 mainApp.controller('listContactsController', function ($scope, $http, $location) {
-    $http.get('http://localhost:3000/contacts')
-        .success(function (data, status, headers, config, statusText) {
-            $scope.contacts = data;
-        })
-        .error(function (data, status, headers, config, statusText) {
-            alert('Error executing http get collection.' + statusText);
-        });
+    getContacts($scope, $http);
 
     $scope.deleteContact = function (index) {
-        deleteContact($scope, $http)
+        deleteContact($http, $scope.contacts[index]._id)
     };
 });
 
@@ -66,14 +60,7 @@ mainApp.controller('addContactController', function ($scope, $http, $routeParams
 });
 
 mainApp.controller('editContactController', function ($scope, $http, $routeParams) {
-    $http.get('http://localhost:3000/contacts/' + $routeParams._id)
-        .success(function (data, status, headers, config, statusText) {
-            $scope.contact = data;
-        })
-        .error(function (data, status, headers, config, statusText) {
-            alert('Error executing http get document.');
-        });
-
+    getContactById($scope, $http, $routeParams);
     $scope.message = 'Update Contact';
 
     $scope.saveContact = function () {
@@ -81,8 +68,24 @@ mainApp.controller('editContactController', function ($scope, $http, $routeParam
     };
 });
 
-function getContacts() {
+function getContacts(scope, http) {
+    http.get('http://localhost:3000/contacts')
+        .success(function (data, status, headers, config, statusText) {
+            scope.contacts = data;
+        })
+        .error(function (data, status, headers, config, statusText) {
+            alert('Error executing http get collection.' + statusText);
+        });
+}
 
+function getContactById(scope, http, routeParams) {
+    http.get('http://localhost:3000/contacts/' + routeParams._id)
+        .success(function (data, status, headers, config, statusText) {
+            scope.contact = data;
+        })
+        .error(function (data, status, headers, config, statusText) {
+            alert('Error executing http get document.');
+        });
 }
 
 function addContact(scope, http) {
@@ -95,19 +98,18 @@ function addContact(scope, http) {
         });
 }
 
-function updateContact() {
-    $http.put('http://localhost:3000/contacts/' + $routeParams._id)
+function updateContact(scope, http, routeParams) {
+    http.put('http://localhost:3000/contacts/' + routeParams._id)
         .success(function (data, status, headers, config, statusText) {
-            $scope.contact = data;
+            scope.contact = data;
         })
         .error(function (data, status, headers, config, statusText) {
             alert('Error executing http get document.');
         });
 }
 
-function deleteContact(scope, http) {
-    var contact = scope.contacts[index];
-    http.delete('http://localhost:3000/contacts/' + contact._id)
+function deleteContact(http, _id) {
+    http.delete('http://localhost:3000/contacts/' + _id)
         .success(function (data, status, headers, config, statusText) {
         })
         .error(function (data, status, headers, config, statusText) {
