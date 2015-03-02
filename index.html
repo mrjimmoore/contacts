@@ -3,12 +3,14 @@
 <html ng-app='mainApp'>
 
 <head lang='en'>
-    <noscript><meta http-equiv='refresh' content='0; URL=noscript.html'/></noscript>
-    <meta charset='UTF-8' />
-    <base href='/contacts/index.html' />
+    <noscript>
+        <meta http-equiv='refresh' content='0; URL=noscript.html'/>
+    </noscript>
+    <meta charset='UTF-8'/>
+    <base href='/contacts/index.html'/>
     <title>Contacts</title>
-    <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css' />
-    <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css' />
+    <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'/>
+    <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css'/>
     <script src='https://code.angularjs.org/1.3.13/angular.min.js'></script>
     <script src='https://code.angularjs.org/1.3.13/angular-route.min.js'></script>
     <script src='https://code.angularjs.org/1.3.13/angular-resource.min.js'></script>
@@ -20,7 +22,9 @@
 
 <nav class='navbar navbar-inverse navbar-fixed-top'>
     <div class='container'>
-        <h3 class='navbar-text'>{{ bannerTitle }} <small>{{ bannerSubTitle }}</small></h3>
+        <h3 class='navbar-text'>{{ bannerTitle }}
+            <small>{{ bannerSubTitle }}</small>
+        </h3>
         <ul class='nav navbar-nav navbar-right'>
             <li><a href='/contacts/listContacts'><i class='fa fa-users'></i> Contacts</a></li>
             <li><a href='/contacts/home'><i class='fa fa-home'></i> Home</a></li>
@@ -33,6 +37,7 @@
 <header class='jumbotron'>
     <div class='container'>
         <h1>{{ pageTitle }} <a href='/contacts/addContact' class='fa fa-user-plus'></a></h1>
+
         <p>{{ pageMessage }}</p>
     </div>
 </header>
