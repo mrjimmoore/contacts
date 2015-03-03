@@ -34,14 +34,14 @@ server.post('/contacts', function (req, res, next) {
 
 server.put('/contacts/:_id', function (req, res, next) {
     db.contact.findOne({_id: mongojs.ObjectId(req.params._id)}, function (err, data) {
-        var updProd = {};
+        var updContact = {};
         for (var n in data) {
-            updProd[n] = data[n];
+            updContact[n] = data[n];
         }
         for (var n in req.params) {
-            updProd[n] = req.params[n];
+            updContact[n] = req.params[n];
         }
-        db.contact.update({_id: mongojs.ObjectId(req.params._id)}, updProd, {multi: false}, function (err, data) {
+        db.contact.update({_id: mongojs.ObjectId(req.params._id)}, updContact, {multi: false}, function (err, data) {
             res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
             res.end(JSON.stringify(data));
         });
