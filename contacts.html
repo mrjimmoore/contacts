@@ -5,7 +5,6 @@
         <table class='table table-striped'>
             <thead>
             <tr>
-                <th>delete</th>
                 <th>fullname</th>
                 <th>email</th>
             </tr>
@@ -13,8 +12,9 @@
 
             <tbody>
             <tr ng-repeat='contact in contacts'>
-                <td><a href='/contacts/listContacts' ng-click='deleteContact($index)' class='fa fa-times'></a></td>
-                <td><a href='/contacts/editContact/{{ contact._id }}' class='navbar-link'>{{ contact.fullname }}</a>
+                <td>
+                    <a href='/contacts/listContacts' ng-click='deleteContact($index)' class='fa fa-times'></a>
+                    <a href='/contacts/editContact/{{ contact._id }}' class='navbar-link'>{{ contact.fullname }}</a>
                 </td>
                 <td>{{ contact.email }}</td>
             </tr>
