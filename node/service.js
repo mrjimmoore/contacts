@@ -1,5 +1,6 @@
 var restify = require('restify');
 var mongojs = require('mongojs');
+//var contact = require('models').contact;
 var db = mongojs('myContacts', ['contact']);
 var server = restify.createServer({name: 'ContactsRestApi'});
 
@@ -35,13 +36,11 @@ server.post('/contacts', function (req, res, next) {
 server.put('/contacts/:_id', function (req, res, next) {
     db.contact.findOne({_id: mongojs.ObjectId(req.params._id)}, function (err, data) {
         var updContact = {};
-        for (var n in data) {
-            updContact[n] = data[n];
-        }
-        for (var n in req.params) {
-            updContact[n] = req.params[n];
-        }
-        db.contact.update({_id: mongojs.ObjectId(req.params._id)}, updContact, {multi: false}, function (err, data) {
+        for (var n in data) updContact[n] = data[n];
+        for (var n in req.params) updContact[n] = req.params[n];
+
+        //db.contact.update({_id: mongojs.ObjectId(req.params._id)}, updContact, function (err, data) {
+        db.contact.update({_id: mongojs.ObjectId(req.params._id)}, {$set: {fullname: req.params.fullname, email: req.params.email}}, function (err, data) {
             res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
             res.end(JSON.stringify(data));
         });

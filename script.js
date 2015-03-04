@@ -54,7 +54,7 @@ mainApp.controller('addContactController', function ($scope, $http, $routeParams
         if ($scope.contact._id == null) {
             addContact($scope, $http);
         } else {
-            updateContact($http, $scope.contacts[index]._id);
+            updateContact($scope, $http, $routeParams);
         }
     };
 });
@@ -64,7 +64,7 @@ mainApp.controller('editContactController', function ($scope, $http, $routeParam
     $scope.message = 'Update Contact';
 
     $scope.saveContact = function () {
-        updateContact($http, $routeParams._id);
+        updateContact($scope, $http, $routeParams);
     };
 });
 
@@ -99,7 +99,7 @@ function addContact(scope, http) {
 }
 
 function updateContact(scope, http, routeParams) {
-    http.put('http://localhost:3000/contacts/' + routeParams._id)
+    http.put('http://localhost:3000/contacts/' + routeParams._id, scope.contact)
         .success(function (data, status, headers, config, statusText) {
             scope.contact = data;
         })
