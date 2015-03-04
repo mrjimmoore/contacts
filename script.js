@@ -99,7 +99,7 @@ function addContact(scope, http) {
 }
 
 function updateContact(scope, http, routeParams) {
-    http.put('http://localhost:3000/contacts/' + routeParams._id, scope.contact)
+    http.put('http://localhost:3000/contacts/' + routeParams._id, JSON.stringify(scope.contact))
         .success(function (data, status, headers, config, statusText) {
             scope.contact = data;
         })

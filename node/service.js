@@ -39,7 +39,7 @@ server.put('/contacts/:_id', function (req, res, next) {
         for (var n in data) updContact[n] = data[n];
         for (var n in req.params) updContact[n] = req.params[n];
 
-        //db.contact.update({_id: mongojs.ObjectId(req.params._id)}, updContact, function (err, data) {
+        //db.contact.update({_id: mongojs.ObjectId(req.params._id)}, updContact, {multi: false}, function (err, data) {
         db.contact.update({_id: mongojs.ObjectId(req.params._id)}, {$set: {fullname: req.params.fullname, email: req.params.email}}, function (err, data) {
             res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
             res.end(JSON.stringify(data));
