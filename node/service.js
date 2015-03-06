@@ -1,63 +1,64 @@
-var restify = require('restify');
-var mongojs = require('mongojs');
-//var contact = require('models').contact;
-var db = mongojs('myContacts', ['contact']);
-var server = restify.createServer({name: 'ContactsRestApi'});
+var express = require('express');
+var mongoose = require('mongoose');
 
-server.use(restify.acceptParser(server.acceptable));
-server.use(restify.queryParser());
-server.use(restify.bodyParser());
-server.use(restify.fullResponse());
-
-server.get('/contacts', function (req, res, next) {
-    db.contact.find(function (err, data) {
-        res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
-        res.end(JSON.stringify(data));
-    });
-    return next();
+mongoose.connect('mongodb://localhost/myContacts', function (err) {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log('Connected to database');
+    }
 });
 
-server.get('/contacts/:_id', function (req, res, next) {
-    db.contact.findOne({_id: mongojs.ObjectId(req.params._id)}, function (err, data) {
-        res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
-        res.end(JSON.stringify(data));
-    });
-    return next();
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'Database connection error'));
+
+var contactSchema = mongoose.Schema({
+    _id: String,
+    fullname: String,
+    email: String
 });
 
-server.post('/contacts', function (req, res, next) {
-    db.contact.save(req.params, function (err, data) {
-        res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
-        res.end(JSON.stringify(data));
+var contactModel = mongoose.model('contact', contactSchema);
+
+var app = express();
+
+app.get('/contacts', function (req, res) {
+    contactModel.findOne({}, function (err, docs) {
+        res.json(docs);
     });
-    return next();
 });
 
-server.put('/contacts/:_id', function (req, res, next) {
-    db.contact.findOne({_id: mongojs.ObjectId(req.params._id)}, function (err, data) {
-        var updContact = {};
-        for (var n in data) updContact[n] = data[n];
-        for (var n in req.params) updContact[n] = req.params[n];
-
-        //db.contact.update({_id: mongojs.ObjectId(req.params._id)}, updContact, {multi: false}, function (err, data) {
-        db.contact.update({_id: mongojs.ObjectId(req.params._id)}, {$set: {fullname: req.params.fullname, email: req.params.email}}, function (err, data) {
-            res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
-            res.end(JSON.stringify(data));
+app.get('/contacts/:_id', function (req, res) {
+    if (req.params._id) {
+        contactModel.findById(req.params._id, function (err, doc) {
+            res.json(doc);
         });
+    }
+});
+
+app.post('/contacts', function (req, res) {
+    contactModel.save(function (err, req, numberAffected) {
+        if (err) {
+            console.log('Error inserting document.');
+        } else {
+            console.log('Document inserted.');
+        }
+    })
+});
+
+app.post('/contacts/:_id', function (req, res) {
+    contactModel.findOneAndUpdate({_id: req._id}, req, {upsert: true, "new": false}).exec(function(err, doc) {
+        if (err) {
+            console.log('Error updating document.');
+        } else {
+            console.log('Document updated.');
+        }
     });
-    return next();
 });
 
-server.del('/contacts/:_id', function (req, res, next) {
-    db.contact.remove({_id: mongojs.ObjectId(req.params._id)}, function (err, data) {
-        res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
-        res.end(JSON.stringify(true));
-    });
-    return next();
+app.listen(3000, function (err) {
+    if (err) {
+        console.log('Error listening on port 3000.');
+    } else {
+        console.log('Listening on port 3000.');    }
 });
-
-server.listen(3000, function () {
-    console.log('%s is now listening at %s', server.name, server.url);
-});
-
-module.exports = server;
