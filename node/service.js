@@ -3,9 +3,9 @@ var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/myContacts', function (err) {
     if (err) {
-        console.log(err);
+        console.log('Error connecting to database.');
     } else {
-        console.log('Connected to database');
+        console.log('Connected to database.');
     }
 });
 

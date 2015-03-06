@@ -1,8 +1,9 @@
 #################
-## Exclude the Node.js install folder.
+## Exclude specific folders
 #################
 
 node/node_modules
+.idea/
 
 #################
 ## Eclipse
