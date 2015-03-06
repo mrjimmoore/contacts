@@ -70,17 +70,16 @@ mainApp.controller('editContactController', function ($scope, $http, $routeParam
 
 function getContacts(scope, http) {
     http.get('http://localhost:3000/contacts')
-        .success(function (data, status, headers, config, statusText) {
+        .success(function (data) {
             scope.contacts = data;
         })
         .error(function (data, status, headers, config, statusText) {
             alert('Error executing http get collection.' + statusText);
         });
 }
-
 function getContactById(scope, http, routeParams) {
     http.get('http://localhost:3000/contacts/' + routeParams._id)
-        .success(function (data, status, headers, config, statusText) {
+        .success(function (data) {
             scope.contact = data;
         })
         .error(function (data, status, headers, config, statusText) {
@@ -90,7 +89,7 @@ function getContactById(scope, http, routeParams) {
 
 function addContact(scope, http) {
     http.post('http://localhost:3000/contacts', JSON.stringify(scope.contact))
-        .success(function (data, status, headers, config) {
+        .success(function (data) {
             scope.contact = data;
         })
         .error(function (data, status, headers, config) {
@@ -100,7 +99,7 @@ function addContact(scope, http) {
 
 function updateContact(scope, http, routeParams) {
     http.put('http://localhost:3000/contacts/' + routeParams._id, JSON.stringify(scope.contact))
-        .success(function (data, status, headers, config, statusText) {
+        .success(function (data) {
             scope.contact = data;
         })
         .error(function (data, status, headers, config, statusText) {
