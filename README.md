@@ -1,5 +1,5 @@
-# contacts
+# Contacts App
 
-Contacts App
+### Example single page application with RESTful API
 
-Testing...
+Technolocy: MEAN Stack including Mongoose.
