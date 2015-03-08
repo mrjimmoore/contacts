@@ -14,7 +14,7 @@
             <tr ng-repeat='contact in contacts'>
                 <td>
                     <a href='/contacts/listContacts' ng-click='deleteContact($index)' class='fa fa-times'></a>
-                    <a href='/contacts/editContact/{{ contact._id }}' class='navbar-link'>{{ contact.fullname }}</a>
+                    <a href='/contacts/updateContact/{{ contact._id }}' class='navbar-link'>{{ contact.fullname }}</a>
                 </td>
                 <td>{{ contact.email }}</td>
             </tr>
