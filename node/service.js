@@ -1,5 +1,6 @@
 var express = require("express");
 var mongoose = require("mongoose");
+var bodyParser = require('body-parser');
 var cors = require("cors");  // Facilitates cross port communication
 
 mongoose.connect('mongodb://localhost/myContacts');
@@ -7,6 +8,8 @@ var contactSchema = { fullname: String,  email: String };
 var contactModel = mongoose.model('contact', contactSchema, 'contact');
 
 var app = express();
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 app.use(cors());
 
 app.get('/contacts', function (req, res) {
@@ -32,8 +35,8 @@ app.get('/contacts/:_id', function (req, res) {
 });
 
 app.post('/contacts', function (req, res) {
-    console.log(req.params);
-    contactModel.create(req.params, function (err) {
+    var newContact = new contactModel(req.body);
+    contactModel.create(newContact, function (err) {
         if (err) {
             console.log(err);
         } else {
@@ -43,10 +46,7 @@ app.post('/contacts', function (req, res) {
 });
 
 app.put('/contacts/:_id', function (req, res) {
-    console.log(req.params);
-    var updatedContact = new contactModel();
-    updatedContact = req.params;
-    contactModel.findByIdAndUpdate(req.params._id, updatedContact, function (err, doc) {
+    contactModel.findByIdAndUpdate(req.body._id, req.body, function (err, doc) {
         if (err) {
             console.log(err);
         } else {
@@ -55,7 +55,7 @@ app.put('/contacts/:_id', function (req, res) {
     });
 });
 
-app.del('/contacts/:_id', function (req, res) {
+app.delete('/contacts/:_id', function (req, res) {
     contactModel.findByIdAndRemove(req.params._id, function (err, doc) {
         if (err) {
             console.log(err);

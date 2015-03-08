@@ -1,17 +1,17 @@
 // module
 
-var mainApp = angular.module('mainApp', ['ngRoute']);
+var app = angular.module('mainApp', ['ngRoute']);
 
 // routes
 
-mainApp.config(function ($routeProvider, $locationProvider) {
+app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', {templateUrl: 'home.html', controller: 'homeController'})
         .when('/about', {templateUrl: 'about.html', controller: 'aboutController'})
         .when('/help', {templateUrl: 'help.html', controller: 'helpController'})
-        .when('/addContact', {templateUrl: 'contact.html', controller: 'addContactController'})
-        .when('/listContacts', {templateUrl: 'contacts.html', controller: 'listContactsController'})
-        .when('/updateContact/:_id', {templateUrl: 'contact.html', controller: 'updateContactController'})
+        .when('/addContact', {templateUrl: 'contact.html', controller: 'contactDetailController'})
+        .when('/listContacts', {templateUrl: 'contacts.html', controller: 'contactListController'})
+        .when('/updateContact/:_id', {templateUrl: 'contact.html', controller: 'contactDetailController'})
         .otherwise({templateUrl: 'home.html', controller: 'homeController'});
 
     $locationProvider.html5Mode(true).hashPrefix('!')
@@ -19,7 +19,7 @@ mainApp.config(function ($routeProvider, $locationProvider) {
 
 // controllers
 
-mainApp.controller('mainController', function ($scope) {
+app.controller('mainController', function ($scope) {
     $scope.bannerTitle = 'SPA Example';
     $scope.bannerSubTitle = 'using HTML5, AngularJS, Node.js, and MongoDB';
     $scope.pageTitle = 'Contacts';
@@ -27,19 +27,19 @@ mainApp.controller('mainController', function ($scope) {
     $scope.currentDate = new Date();
 });
 
-mainApp.controller('homeController', function ($scope) {
+app.controller('homeController', function ($scope) {
     $scope.message = 'Home page message...';
 });
 
-mainApp.controller('aboutController', function ($scope) {
+app.controller('aboutController', function ($scope) {
     $scope.message = 'About page message...';
 });
 
-mainApp.controller('helpController', function ($scope) {
+app.controller('helpController', function ($scope) {
     $scope.message = 'Help page message...';
 });
 
-mainApp.controller('listContactsController', function ($scope, $http, $location) {
+app.controller('contactListController', function ($scope, $http) {
     getContacts($scope, $http);
 
     $scope.deleteContact = function (index) {
@@ -47,27 +47,19 @@ mainApp.controller('listContactsController', function ($scope, $http, $location)
     };
 });
 
-mainApp.controller('addContactController', function ($scope, $http, $routeParams) {
-    $scope.message = 'Add New Contact';
+app.controller('contactDetailController', function ($scope, $http, $routeParams) {
+    if ($routeParams._id == null) {
+        $scope.message = 'Add New Contact';
+    } else {
+        $scope.message = 'Update Contact';
+        getContactById($scope, $http, $routeParams);
+    }
 
-    $scope.addContact = function () {
-        if ($scope.contact._id == null) {
+    $scope.saveContact = function () {
+        if ($routeParams._id == null) {
             addContact($scope, $http);
         } else {
-            updateContact($scope, $http, $routeParams);
-        }
-    };
-});
-
-mainApp.controller('updateContactController', function ($scope, $http, $routeParams) {
-    getContactById($scope, $http, $routeParams);
-    $scope.message = 'Update Contact';
-
-    $scope.updateContact = function () {
-        if ($scope.contact._id == null) {
-            addContact($scope, $http);
-        } else {
-            updateContact($scope, $http, $routeParams);
+            updateContact($scope, $http, $routeParams,$scope.contact);
         }
     };
 });
@@ -78,9 +70,10 @@ function getContacts(scope, http) {
             scope.contacts = data;
         })
         .error(function (data, status, headers, config, statusText) {
-            alert('Error executing http get collection.' + statusText);
+            alert('Error executing http get collection.');
         });
 }
+
 function getContactById(scope, http, routeParams) {
     http.get('http://localhost:3000/contacts/' + routeParams._id)
         .success(function (data) {
@@ -92,7 +85,7 @@ function getContactById(scope, http, routeParams) {
 }
 
 function addContact(scope, http) {
-    http.post('http://localhost:3000/contacts', JSON.stringify(scope.contact))
+    http.post('http://localhost:3000/contacts', scope.contact)
         .success(function (data) {
             scope.contact = data;
         })
@@ -101,8 +94,9 @@ function addContact(scope, http) {
         });
 }
 
-function updateContact(scope, http, routeParams) {
-    http.put('http://localhost:3000/contacts/' + routeParams._id, JSON.stringify(scope.contact))
+function updateContact(scope, http, routeParams, contact) {
+    JSON.stringify(scope.contact)
+    http.put('http://localhost:3000/contacts/' + routeParams._id, scope.contact)
         .success(function (data) {
             scope.contact = data;
         })
