@@ -8,8 +8,8 @@ var contactSchema = { fullname: String,  email: String };
 var contactModel = mongoose.model('contact', contactSchema, 'contact');
 
 var app = express();
-app.use(bodyParser.urlencoded());
-app.use(bodyParser.json());
+app.use(require('body-parser').urlencoded({extended: true}));
+app.use(require('body-parser').json());
 app.use(cors());
 
 app.get('/contacts', function (req, res) {
