@@ -3,4 +3,5 @@
 ### Example single page application with RESTful API
 
 Technologies: MEAN Stack including Mongoose.
-Testing...
+
+Starting a new set of features 20150308
