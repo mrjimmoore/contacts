@@ -11,7 +11,7 @@ mainApp.config(function ($routeProvider, $locationProvider) {
         .when('/help', {templateUrl: 'help.html', controller: 'helpController'})
         .when('/addContact', {templateUrl: 'contact.html', controller: 'addContactController'})
         .when('/listContacts', {templateUrl: 'contacts.html', controller: 'listContactsController'})
-        .when('/editContact/:_id', {templateUrl: 'contact.html', controller: 'editContactController'})
+        .when('/updateContact/:_id', {templateUrl: 'contact.html', controller: 'updateContactController'})
         .otherwise({templateUrl: 'home.html', controller: 'homeController'});
 
     $locationProvider.html5Mode(true).hashPrefix('!')
@@ -43,14 +43,14 @@ mainApp.controller('listContactsController', function ($scope, $http, $location)
     getContacts($scope, $http);
 
     $scope.deleteContact = function (index) {
-        deleteContact($http, $scope.contacts[index]._id)
+        deleteContact($scope, $http, index);
     };
 });
 
 mainApp.controller('addContactController', function ($scope, $http, $routeParams) {
     $scope.message = 'Add New Contact';
 
-    $scope.saveContact = function () {
+    $scope.addContact = function () {
         if ($scope.contact._id == null) {
             addContact($scope, $http);
         } else {
@@ -59,12 +59,16 @@ mainApp.controller('addContactController', function ($scope, $http, $routeParams
     };
 });
 
-mainApp.controller('editContactController', function ($scope, $http, $routeParams) {
+mainApp.controller('updateContactController', function ($scope, $http, $routeParams) {
     getContactById($scope, $http, $routeParams);
     $scope.message = 'Update Contact';
 
-    $scope.saveContact = function () {
-        updateContact($scope, $http, $routeParams);
+    $scope.updateContact = function () {
+        if ($scope.contact._id == null) {
+            addContact($scope, $http);
+        } else {
+            updateContact($scope, $http, $routeParams);
+        }
     };
 });
 
@@ -107,9 +111,10 @@ function updateContact(scope, http, routeParams) {
         });
 }
 
-function deleteContact(http, _id) {
-    http.delete('http://localhost:3000/contacts/' + _id)
+function deleteContact(scope, http, index) {
+    http.delete('http://localhost:3000/contacts/' + scope.contacts[index]._id)
         .success(function (data, status, headers, config, statusText) {
+            getContacts(scope, http);
         })
         .error(function (data, status, headers, config, statusText) {
             alert('Error executing http delete document.');

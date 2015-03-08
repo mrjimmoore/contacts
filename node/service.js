@@ -1,13 +1,13 @@
-var express = require('express');
+var express = require("express");
+var mongoose = require("mongoose");
+var cors = require("cors");  // Facilitates cross port communication
+
+mongoose.connect('mongodb://localhost/myContacts');
+var contactSchema = { fullname: String,  email: String };
+var contactModel = mongoose.model('contact', contactSchema, 'contact');
+
 var app = express();
-
-var bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-var mongoose = require('mongoose');
-var contactSchema = mongoose.Schema({ fullname: String, email: String }, { _id: true });
-var contactModel = mongoose.model('contact', contactSchema);
+app.use(cors());
 
 app.get('/contacts', function (req, res) {
     contactModel.find(function (err, docs) {
@@ -23,7 +23,7 @@ app.get('/contacts/:_id', function (req, res) {
     if (req.params._id) {
         contactModel.findById(req.params._id, function (err, doc) {
             if (err) {
-                console.log('Error finding a document by _id.');
+                console.log(err);
             } else {
                 res.json(doc);
             }
@@ -32,28 +32,42 @@ app.get('/contacts/:_id', function (req, res) {
 });
 
 app.post('/contacts', function (req, res) {
-    contactModel.save(function (err, req, numberAffected) {
+    console.log(req.params);
+    contactModel.create(req.params, function (err) {
         if (err) {
             console.log(err);
         } else {
-            console.log('Document inserted.');
+            res.json(newContact);
         }
     })
 });
 
-app.post('/contacts/:_id', function (req, res) {
-    contactModel.findOneAndUpdate({_id: req._id}, req, {upsert: true, "new": false}).exec(function (err, doc) {
+app.put('/contacts/:_id', function (req, res) {
+    console.log(req.params);
+    var updatedContact = new contactModel();
+    updatedContact = req.params;
+    contactModel.findByIdAndUpdate(req.params._id, updatedContact, function (err, doc) {
         if (err) {
-            console.log('Error updating document.');
+            console.log(err);
         } else {
-            console.log('Document updated.');
+            res.json(doc);
+        }
+    });
+});
+
+app.del('/contacts/:_id', function (req, res) {
+    contactModel.findByIdAndRemove(req.params._id, function (err, doc) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(doc);
         }
     });
 });
 
 app.listen(3000, function (err) {
     if (err) {
-        console.log('Error listening on port 3000.');
+        console.log(err);
     } else {
         console.log('Listening on port 3000.');
     }
