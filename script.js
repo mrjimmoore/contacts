@@ -17,6 +17,36 @@ app.config(function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true).hashPrefix('!')
 });
 
+// factory
+
+app.factory('dataFactory', ['$http', function ($http) {
+
+    var urlBase = 'http://localhost:3000/contacts';
+    var dataFactory = {};
+
+    dataFactory.getContacts = function () {
+        return $http.get(urlBase);
+    };
+
+    dataFactory.getContact = function (id) {
+        return $http.get(urlBase + '/' + id);
+    };
+
+    dataFactory.insertContact = function (contact) {
+        return $http.post(urlBase, contact);
+    };
+
+    dataFactory.updateContact = function (contact) {
+        return $http.put(urlBase + '/' + contact._id, contact)
+    };
+
+    dataFactory.deleteContact = function (id) {
+        return $http.delete(urlBase + '/' + id);
+    };
+
+    return dataFactory;
+}]);
+
 // controllers
 
 app.controller('mainController', function ($scope) {
@@ -39,78 +69,73 @@ app.controller('helpController', function ($scope) {
     $scope.message = 'Help page message...';
 });
 
-app.controller('contactListController', function ($scope, $http) {
-    getContacts($scope, $http);
+app.controller('contactListController', function ($scope, dataFactory) {
+    getContacts();
 
-    $scope.deleteContact = function (index) {
-        deleteContact($scope, $http, index);
+    function getContacts() {
+        dataFactory.getContacts()
+            .success(function (docs) {
+                $scope.contacts = docs;
+            })
+            .error(function (err) {
+                alert('Unable to load data: ' + err.message);
+            });
+    }
+
+    $scope.deleteContact = function () {
+        dataFactory.deleteContact($scope.contacts[index]._id)
+            .success(function () {
+                getContacts();
+            })
+            .error(function (err) {
+                alert('Unable to delete document: ' + err.message);
+            });
     };
 });
 
-app.controller('contactDetailController', function ($scope, $http, $routeParams) {
+app.controller('contactDetailController', function ($scope, $routeParams, dataFactory) {
     if ($routeParams._id == null) {
         $scope.message = 'Add New Contact';
     } else {
         $scope.message = 'Update Contact';
-        getContactById($scope, $http, $routeParams);
+        getContact($routeParams._id);
     }
 
     $scope.saveContact = function () {
-        if ($routeParams._id == null) {
-            addContact($scope, $http);
+        if ($scope.contact._id == null) {
+            addContact($scope.contact);
         } else {
-            updateContact($scope, $http, $routeParams,$scope.contact);
+            updateContact($scope.contact);
         }
     };
+
+    function getContact(id) {
+        dataFactory.getContact(id)
+            .success(function (doc) {
+                $scope.contact = doc;
+            })
+            .error(function (err) {
+                alert('Unable to get document: ' + err.message);
+            });
+    }
+
+    function addContact(contact) {
+        dataFactory.insertContact(contact)
+            .success(function(doc) {
+                $scope.contact = doc;
+            })
+            .error(function(err) {
+                alert('Unable to add a contact: ' + err.message);
+            });
+    }
+
+    function updateContact(contact) {
+        dataFactory.updateContact(contact)
+            .success(function(doc) {
+                $scope.contact = doc;
+            })
+            .error(function(err) {
+                alert('Unable to update contact: ' + err.message);
+            })
+    }
 });
-
-function getContacts(scope, http) {
-    http.get('http://localhost:3000/contacts')
-        .success(function (data) {
-            scope.contacts = data;
-        })
-        .error(function (data, status, headers, config, statusText) {
-            alert('Error executing http get collection.');
-        });
-}
-
-function getContactById(scope, http, routeParams) {
-    http.get('http://localhost:3000/contacts/' + routeParams._id)
-        .success(function (data) {
-            scope.contact = data;
-        })
-        .error(function (data, status, headers, config, statusText) {
-            alert('Error executing http get document.');
-        });
-}
-
-function addContact(scope, http) {
-    http.post('http://localhost:3000/contacts', scope.contact)
-        .success(function (data) {
-            scope.contact = data;
-        })
-        .error(function (data, status, headers, config) {
-            alert('Error executing http get document.');
-        });
-}
-
-function updateContact(scope, http, routeParams, contact) {
-    JSON.stringify(scope.contact)
-    http.put('http://localhost:3000/contacts/' + routeParams._id, scope.contact)
-        .success(function (data) {
-            scope.contact = data;
-        })
-        .error(function (data, status, headers, config, statusText) {
-            alert('Error executing http get document.');
-        });
-}
-
-function deleteContact(scope, http, index) {
-    http.delete('http://localhost:3000/contacts/' + scope.contacts[index]._id)
-        .success(function (data, status, headers, config, statusText) {
-            getContacts(scope, http);
-        })
-        .error(function (data, status, headers, config, statusText) {
-            alert('Error executing http delete document.');
-        });
-}
