@@ -52,9 +52,9 @@ app.factory('dataFactory', ['$http', function ($http) {
 app.controller('mainController', function ($scope) {
     $scope.bannerTitle = 'SPA Example';
     $scope.bannerSubTitle = 'using HTML5, AngularJS, Node.js, and MongoDB';
-    $scope.pageTitle = 'Contacts';
-    $scope.pageMessage = 'Morbi ullamcorper auctor convallis quam turpis molestie eget sem, leo cras velit lacus vulputate imperdiet molestie, gravida suscipit facilisis sagittis per fusce ante.';
-    $scope.currentDate = new Date();
+    $scope.headerTitle = 'Contacts';
+    $scope.headerMessage = 'Morbi ullamcorper auctor convallis quam turpis molestie eget sem, leo cras velit lacus vulputate imperdiet molestie, gravida suscipit facilisis sagittis per fusce ante.';
+    $scope.copyrightDate = new Date();
 });
 
 app.controller('homeController', function ($scope) {
@@ -69,7 +69,7 @@ app.controller('helpController', function ($scope) {
     $scope.message = 'Help page message...';
 });
 
-app.controller('contactListController', function ($scope, dataFactory) {
+app.controller('contactListController', function ($scope, $window, dataFactory) {
     getContacts();
 
     function getContacts() {
@@ -82,14 +82,17 @@ app.controller('contactListController', function ($scope, dataFactory) {
             });
     }
 
-    $scope.deleteContact = function () {
-        dataFactory.deleteContact($scope.contacts[index]._id)
-            .success(function () {
-                getContacts();
-            })
-            .error(function (err) {
-                alert('Unable to delete document: ' + err.message);
-            });
+    $scope.deleteContact = function (index) {
+        var confirmation = $window.confirm('Delete ' + $scope.contacts[index].fullname + '?');
+        if (confirmation) {
+            dataFactory.deleteContact($scope.contacts[index]._id)
+                .success(function () {
+                    getContacts();
+                })
+                .error(function (err) {
+                    alert('Unable to delete document: ' + err.message);
+                });
+        }
     };
 });
 
@@ -121,20 +124,20 @@ app.controller('contactDetailController', function ($scope, $routeParams, dataFa
 
     function addContact(contact) {
         dataFactory.insertContact(contact)
-            .success(function(doc) {
+            .success(function (doc) {
                 $scope.contact = doc;
             })
-            .error(function(err) {
+            .error(function (err) {
                 alert('Unable to add a contact: ' + err.message);
             });
     }
 
     function updateContact(contact) {
         dataFactory.updateContact(contact)
-            .success(function(doc) {
+            .success(function (doc) {
                 $scope.contact = doc;
             })
-            .error(function(err) {
+            .error(function (err) {
                 alert('Unable to update contact: ' + err.message);
             })
     }
