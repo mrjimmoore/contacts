@@ -14,7 +14,7 @@ app.config(function ($routeProvider, $locationProvider) {
         .when('/updateContact/:_id', {templateUrl: 'contact.html', controller: 'contactDetailController'})
         .otherwise({templateUrl: 'home.html', controller: 'homeController'});
 
-    $locationProvider.html5Mode(true).hashPrefix('!')
+    $locationProvider.html5Mode(true).hashPrefix('!');
 });
 
 // factory
@@ -51,7 +51,7 @@ app.factory('dataFactory', ['$http', function ($http) {
 
 app.controller('mainController', function ($scope) {
     $scope.bannerTitle = 'SPA Example';
-    $scope.bannerSubTitle = 'using HTML5, AngularJS, Node.js, and MongoDB';
+    $scope.bannerSubTitle = 'using the MEAN Stack';
     $scope.headerTitle = 'Contacts';
     $scope.headerMessage = 'Morbi ullamcorper auctor convallis quam turpis molestie eget sem, leo cras velit lacus vulputate imperdiet molestie, gravida suscipit facilisis sagittis per fusce ante.';
     $scope.copyrightDate = new Date();
