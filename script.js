@@ -126,6 +126,7 @@ app.controller('contactDetailController', function ($scope, $routeParams, dataFa
         dataFactory.insertContact(contact)
             .success(function (doc) {
                 $scope.contact = doc;
+                $scope.message = 'Update Contact';
             })
             .error(function (err) {
                 alert('Unable to add a contact: ' + err.message);
