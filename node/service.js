@@ -4,7 +4,8 @@ var bodyParser = require('body-parser');
 var cors = require("cors");  // Facilitates cross port communication
 
 mongoose.connect('mongodb://localhost/myContacts');
-var contactSchema = { fullname: String,  email: String };
+
+var contactSchema = { fullname: String, email: String, notes: String };
 var contactModel = mongoose.model('contact', contactSchema, 'contact');
 
 var app = express();

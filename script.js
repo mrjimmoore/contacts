@@ -49,12 +49,17 @@ app.factory('dataFactory', ['$http', function ($http) {
 
 // controllers
 
-app.controller('mainController', function ($scope) {
+app.controller('mainController', function ($scope, $location) {
     $scope.bannerTitle = 'SPA Example';
     $scope.bannerSubTitle = 'using the MEAN Stack';
     $scope.headerTitle = 'Contacts';
     $scope.headerMessage = 'Morbi ullamcorper auctor convallis quam turpis molestie eget sem, leo cras velit lacus vulputate imperdiet molestie, gravida suscipit facilisis sagittis per fusce ante.';
     $scope.copyrightDate = new Date();
+
+    // Allow the routeProvider to be loaded via ng-click.
+    $scope.loadView = function (route) {
+        $location.path(route);
+    }
 });
 
 app.controller('homeController', function ($scope) {
@@ -83,16 +88,13 @@ app.controller('contactListController', function ($scope, $window, dataFactory) 
     }
 
     $scope.deleteContact = function (index) {
-        var confirmation = $window.confirm('Delete ' + $scope.contacts[index].fullname + '?');
-        if (confirmation) {
-            dataFactory.deleteContact($scope.contacts[index]._id)
-                .success(function () {
-                    getContacts();
-                })
-                .error(function (err) {
-                    alert('Unable to delete document: ' + err.message);
-                });
-        }
+        dataFactory.deleteContact($scope.contacts[index]._id)
+            .success(function () {
+                getContacts();
+            })
+            .error(function (err) {
+                alert('Unable to delete document: ' + err.message);
+            });
     };
 });
 
@@ -143,3 +145,23 @@ app.controller('contactDetailController', function ($scope, $routeParams, dataFa
             })
     }
 });
+
+// Directives
+
+app.directive('jimConfirmClick', [
+    function () {
+        return {
+            priority: -1,
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                element.bind('click', function (e) {
+                    var message = attrs.jimConfirmClick;
+                    if (message && !confirm(message)) {
+                        e.stopImmediatePropagation();
+                        e.preventDefault();
+                    }
+                });
+            }
+        }
+    }
+]);
