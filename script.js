@@ -57,8 +57,8 @@ app.controller('mainController', function ($scope, $location) {
     $scope.copyrightDate = new Date();
 
     // Allow the routeProvider to be loaded via ng-click.
-    $scope.loadView = function (route) {
-        $location.path(route);
+    $scope.loadView = function (uri) {
+        $location.path(uri);
     }
 });
 
@@ -75,6 +75,8 @@ app.controller('helpController', function ($scope) {
 });
 
 app.controller('contactListController', function ($scope, $window, dataFactory) {
+    $scope.sortedBy = 'fullname';
+    $scope.sortedDesc = false;
     getContacts();
 
     function getContacts() {
@@ -96,6 +98,15 @@ app.controller('contactListController', function ($scope, $window, dataFactory) 
                 alert('Unable to delete document: ' + err.message);
             });
     };
+
+    $scope.changeSorting = function (columnName) {
+        if (columnName == $scope.sortedBy) {
+            $scope.sortedDesc = !$scope.sortedDesc;
+        } else {
+            $scope.sortedBy = columnName;
+            $scope.sortedDesc = false;
+        }
+    }
 });
 
 app.controller('contactDetailController', function ($scope, $routeParams, dataFactory) {
