@@ -28,6 +28,10 @@ app.factory('dataFactory', ['$http', function ($http) {
         return $http.get(urlBase);
     };
 
+    dataFactory.getContactsSorted = function (sortColumn, sortDescending) {
+        return $http.get(urlBase + '/sorted/' + sortColumn + '/' + (sortDescending ? 'descending' : 'ascending'));
+    };
+
     dataFactory.getContact = function (id) {
         return $http.get(urlBase + '/' + id);
     };
@@ -75,12 +79,12 @@ app.controller('helpController', function ($scope) {
 });
 
 app.controller('contactListController', function ($scope, $window, dataFactory) {
-    $scope.sortedBy = 'fullname';
-    $scope.sortedDesc = false;
+    $scope.sortColumn = 'fullname';
+    $scope.sortDescending = false;
     getContacts();
 
     function getContacts() {
-        dataFactory.getContacts()
+        dataFactory.getContactsSorted($scope.sortColumn, $scope.sortDescending)
             .success(function (docs) {
                 $scope.contacts = docs;
             })
@@ -100,12 +104,13 @@ app.controller('contactListController', function ($scope, $window, dataFactory) 
     };
 
     $scope.changeSorting = function (columnName) {
-        if (columnName == $scope.sortedBy) {
-            $scope.sortedDesc = !$scope.sortedDesc;
+        if (columnName == $scope.sortColumn) {
+            $scope.sortDescending = !$scope.sortDescending;
         } else {
-            $scope.sortedBy = columnName;
-            $scope.sortedDesc = false;
+            $scope.sortColumn = columnName;
+            $scope.sortDescending = false;
         }
+        getContacts();
     }
 });
 

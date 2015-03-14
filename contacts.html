@@ -7,16 +7,16 @@
             <tr>
                 <th>
                     <a href='#' ng-click="changeSorting('fullname')">fullname</a>
-                    <span ng-show="sortedBy == 'fullname'">
-                        <span ng-show="!sortedDesc" class="fa fa-sort-asc"></span>
-                        <span ng-show="sortedDesc" class='fa fa-sort-desc'></span>
+                    <span ng-show="sortColumn == 'fullname'">
+                        <span ng-show="!sortDescending" class="fa fa-sort-asc"></span>
+                        <span ng-show="sortDescending" class='fa fa-sort-desc'></span>
                     </span>
                 </th>
                 <th>
                     <a href='#' ng-click="changeSorting('email')">email</a>
-                    <span ng-show="sortedBy == 'email'">
-                        <span ng-show="!sortedDesc" class="fa fa-sort-asc"></span>
-                        <span ng-show="sortedDesc" class='fa fa-sort-desc'></span>
+                    <span ng-show="sortColumn == 'email'">
+                        <span ng-show="!sortDescending" class="fa fa-sort-asc"></span>
+                        <span ng-show="sortDescending" class='fa fa-sort-desc'></span>
                     </span>
                 </th>
             </tr>

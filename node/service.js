@@ -5,7 +5,7 @@ var cors = require("cors");  // Facilitates cross port communication
 
 mongoose.connect('mongodb://localhost/myContacts');
 
-var contactSchema = { fullname: String, email: String, notes: String };
+var contactSchema = {fullname: String, email: String, notes: String};
 var contactModel = mongoose.model('contact', contactSchema, 'contact');
 
 var app = express();
@@ -15,6 +15,18 @@ app.use(cors());
 
 app.get('/contacts', function (req, res) {
     contactModel.find(function (err, docs) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(docs);
+        }
+    });
+});
+
+app.get('/contacts/sorted/:sortColumn/:sortDirection', function (req, res) {
+    var sortColumn = req.params.sortColumn;
+    var sortDirection = req.params.sortDirection;
+    contactModel.find().sort([[sortColumn, sortDirection]]).exec(function (err, docs) {
         if (err) {
             console.log(err);
         } else {
