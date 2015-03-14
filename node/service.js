@@ -5,11 +5,11 @@ var cors = require("cors");  // Facilitates cross port communication
 
 mongoose.connect('mongodb://localhost/myContacts');
 
-var contactSchema = {fullname: String, email: String, notes: String};
+var contactSchema = { fullname: String, email: String, notes: String };
 var contactModel = mongoose.model('contact', contactSchema, 'contact');
 
 var app = express();
-app.use(require('body-parser').urlencoded({extended: true}));
+app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('body-parser').json());
 app.use(cors());
 
@@ -23,7 +23,7 @@ app.get('/contacts', function (req, res) {
     });
 });
 
-app.get('/contacts/sorted/:sortColumn/:sortDirection', function (req, res) {
+app.get('/contacts/:sortColumn/:sortDirection', function (req, res) {
     var sortColumn = req.params.sortColumn;
     var sortDirection = req.params.sortDirection;
     contactModel.find().sort([[sortColumn, sortDirection]]).exec(function (err, docs) {
@@ -59,7 +59,7 @@ app.post('/contacts', function (req, res) {
 });
 
 app.put('/contacts/:_id', function (req, res) {
-    contactModel.findByIdAndUpdate(req.body._id, req.body, function (err, doc) {
+    contactModel.findByIdAndUpdate(req.params._id, req.body, function (err, doc) {
         if (err) {
             console.log(err);
         } else {

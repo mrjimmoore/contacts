@@ -29,7 +29,7 @@ app.factory('dataFactory', ['$http', function ($http) {
     };
 
     dataFactory.getContactsSorted = function (sortColumn, sortDescending) {
-        return $http.get(urlBase + '/sorted/' + sortColumn + '/' + (sortDescending ? 'descending' : 'ascending'));
+        return $http.get(urlBase + '/' + sortColumn + '/' + (sortDescending ? 'descending' : 'ascending'));
     };
 
     dataFactory.getContact = function (id) {
