@@ -1,6 +1,11 @@
 <article>
 
     <section class='container'>
+        <span class='lead'>{{ articleTitle }}&nbsp;<a href='/contacts/addContact'><i class='fa fa-user-plus'></i></a></span>
+        <p>{{ articleMessage }}</p>
+    </section>
+
+    <section class='container'>
 
         <table class='table table-striped table table-hover'>
             <thead>
@@ -21,7 +26,9 @@
             <tbody>
             <tr ng-repeat='contact in contacts'>
                 <td>
-                    <a href='/contacts/listContacts' ng-click='deleteContact($index)' jim-confirm-click='Are you sure you want to delete {{contact.fullname}}?' class='fa fa-user-times'></a>
+                    <a href='/contacts/listContacts' ng-click='deleteContact($index)' jim-confirm-click='Delete {{contact.fullname}}?'>
+                        <i class='fa fa-user-times'></i>
+                    </a>
                     &nbsp;
                     <a href='/contacts/updateContact/{{ contact._id }}' class='navbar-link'>{{ contact.fullname }}</a>
                 </td>

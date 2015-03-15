@@ -1,8 +1,11 @@
 <article>
 
-    <section class='container' ng-model='contact'>
+    <section class='container'>
+        <span class='lead'>{{ articleTitle }}&nbsp;<a href='/contacts/listContacts'><i class='fa fa-users'></i></a></span>
+        <p>{{ articleMessage }}</p>
+    </section>
 
-        <p class='lead'>{{ message }}</p>
+    <section class='container' ng-model='contact'>
 
         <div class='form-group'>
             <label for='fullname'>fullname</label>
