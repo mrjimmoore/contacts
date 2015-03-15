@@ -1,7 +1,7 @@
 <article>
 
     <section class='container'>
-        <span class='lead'>{{ articleTitle }}&nbsp;<a href='/contacts/listContacts'><i class='fa fa-users'></i></a></span>
+        <span class='lead'><a href='/contacts/listContacts'><i class='fa fa-users'></i></a>&nbsp;{{ articleTitle }}</span>
         <p>{{ articleMessage }}</p>
     </section>
 
@@ -9,7 +9,7 @@
 
         <div class='form-group'>
             <label for='fullname'>fullname</label>
-            <input id='fullname' class='form-control' type='text' ng-model='contact.fullname' placeholder='enter fullname'/>
+            <input id='fullname' class='form-control' type='text' ng-model='contact.fullname' placeholder='enter fullname' autofocus/>
         </div>
 
         <div class='form-group'>
