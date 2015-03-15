@@ -54,9 +54,9 @@ app.factory('dataFactory', ['$http', function ($http) {
 // controllers
 
 app.controller('mainController', function ($scope, $location) {
-    $scope.bannerTitle = 'SPA Example';
-    $scope.bannerSubTitle = 'using the MEAN Stack';
-    $scope.headerTitle = 'Contacts';
+    $scope.navbarTitle = 'SPA Example';
+    $scope.navbarSubTitle = 'using the MEAN Stack';
+    $scope.headerTitle = 'My Apps';
     $scope.headerMessage = 'Morbi ullamcorper auctor convallis quam turpis molestie eget sem, leo cras velit lacus vulputate imperdiet molestie, gravida suscipit facilisis sagittis per fusce ante.';
     $scope.copyrightDate = new Date();
 
@@ -67,18 +67,20 @@ app.controller('mainController', function ($scope, $location) {
 });
 
 app.controller('homeController', function ($scope) {
-    $scope.message = 'Home page message...';
+    $scope.articleTitle = 'Home';
 });
 
 app.controller('aboutController', function ($scope) {
-    $scope.message = 'About page message...';
+    $scope.articleTitle = 'About';
 });
 
 app.controller('helpController', function ($scope) {
-    $scope.message = 'Help page message...';
+    $scope.articleTitle = 'Help';
 });
 
 app.controller('contactListController', function ($scope, $window, dataFactory) {
+    $scope.articleTitle = 'Contacts';
+    $scope.articleMessage = 'Lorem ipsum potenti odio imperdiet tempor pulvinar metus, per imperdiet nulla mauris pharetra elementum orci, erat lectus bibendum et himenaeos platea interdum turpis elementum nibh interdum rutrum sagittis congue dolor blandit, condimentum mattis imperdiet mi nulla habitasse pellentesque aliquam, sociosqu magna ultricies nam quis phasellus fusce ultrices.'
     $scope.sortColumn = 'fullname';
     $scope.sortDescending = false;
     getContacts();
@@ -115,10 +117,11 @@ app.controller('contactListController', function ($scope, $window, dataFactory) 
 });
 
 app.controller('contactDetailController', function ($scope, $routeParams, dataFactory) {
+    $scope.articleMessage = 'Lorem ipsum potenti odio imperdiet tempor pulvinar metus, per imperdiet nulla mauris pharetra elementum orci, erat lectus bibendum et himenaeos platea interdum turpis elementum nibh interdum rutrum sagittis congue dolor blandit, condimentum mattis imperdiet mi nulla habitasse pellentesque aliquam, sociosqu magna ultricies nam quis phasellus fusce ultrices.'
     if ($routeParams._id == null) {
-        $scope.message = 'Add New Contact';
+        $scope.articleTitle = 'Add Contact';
     } else {
-        $scope.message = 'Update Contact';
+        $scope.articleTitle = 'Update Contact';
         getContact($routeParams._id);
     }
 
@@ -144,7 +147,7 @@ app.controller('contactDetailController', function ($scope, $routeParams, dataFa
         dataFactory.insertContact(contact)
             .success(function (doc) {
                 $scope.contact = doc;
-                $scope.message = 'Update Contact';
+                $scope.articleTitle = 'Update Contact';
             })
             .error(function (err) {
                 alert('Unable to add a contact: ' + err.message);
