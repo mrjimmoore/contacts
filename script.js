@@ -81,6 +81,7 @@ app.controller('helpController', function ($scope) {
 app.controller('contactListController', function ($scope, $window, dataFactory) {
     $scope.articleTitle = 'Contacts';
     $scope.articleMessage = 'Lorem ipsum potenti odio imperdiet tempor pulvinar metus, per imperdiet nulla mauris pharetra elementum orci, erat lectus bibendum et himenaeos platea interdum turpis elementum nibh interdum rutrum sagittis congue dolor blandit, condimentum mattis imperdiet mi nulla habitasse pellentesque aliquam, sociosqu magna ultricies nam quis phasellus fusce ultrices.'
+    $scope.sectionTitle = 'Add Contact'
     $scope.sortColumn = 'fullname';
     $scope.sortDescending = false;
     getContacts();
@@ -119,9 +120,11 @@ app.controller('contactListController', function ($scope, $window, dataFactory) 
 app.controller('contactDetailController', function ($scope, $routeParams, dataFactory) {
     $scope.articleMessage = 'Lorem ipsum potenti odio imperdiet tempor pulvinar metus, per imperdiet nulla mauris pharetra elementum orci, erat lectus bibendum et himenaeos platea interdum turpis elementum nibh interdum rutrum sagittis congue dolor blandit, condimentum mattis imperdiet mi nulla habitasse pellentesque aliquam, sociosqu magna ultricies nam quis phasellus fusce ultrices.'
     if ($routeParams._id == null) {
-        $scope.articleTitle = 'Add Contact';
+        $scope.articleTitle = 'Contacts';
+        $scope.sectionTitle = 'Add Contact';
     } else {
-        $scope.articleTitle = 'Update Contact';
+        $scope.articleTitle = 'Contacts';
+        $scope.sectionTitle = 'Update Contact';
         getContact($routeParams._id);
     }
 
@@ -147,7 +150,7 @@ app.controller('contactDetailController', function ($scope, $routeParams, dataFa
         dataFactory.insertContact(contact)
             .success(function (doc) {
                 $scope.contact = doc;
-                $scope.articleTitle = 'Update Contact';
+                $scope.sectionTitle = 'Update Contact';
             })
             .error(function (err) {
                 alert('Unable to add a contact: ' + err.message);
