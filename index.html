@@ -21,7 +21,7 @@
 
 <nav class='navbar navbar-inverse navbar-fixed-top'>
     <div class='container'>
-        <h3 class='navbar-text'>{{ navbarTitle }}
+        <h3 class='navbar-text'><i class='fa fa-coffee'></i>&nbsp;{{ navbarTitle }}
             <small>{{ navbarSubTitle }}</small>
         </h3>
         <ul class='nav navbar-nav navbar-right'>
@@ -34,11 +34,7 @@
 </nav>
 
 <header class='jumbotron'>
-    <div class='container'>
-        <h1><i class='fa fa-coffee'></i>&nbsp;{{ headerTitle }}</h1>
-        <p>{{ headerMessage }}</p>
-        <p class='lead'>{{ sectionTitle }}</p>
-    </div>
+    <div class='container' ng-include='headerContent'/>
 </header>
 
 <main ng-view></main>
