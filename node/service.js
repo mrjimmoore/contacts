@@ -1,19 +1,19 @@
 var express = require("express");
 var mongoose = require("mongoose");
-var bodyParser = require('body-parser');
+var bodyParser = require("body-parser");
 var cors = require("cors");  // Facilitates cross port communication
 
-mongoose.connect('mongodb://localhost/myContacts');
+mongoose.connect("mongodb://localhost/myContacts");
 
 var contactSchema = { fullname: String, email: String, notes: String };
-var contactModel = mongoose.model('contact', contactSchema, 'contact');
+var contactModel = mongoose.model("contact", contactSchema, "contact");
 
 var app = express();
-app.use(require('body-parser').urlencoded({ extended: true }));
-app.use(require('body-parser').json());
+app.use(require("body-parser").urlencoded({ extended: true }));
+app.use(require("body-parser").json());
 app.use(cors());
 
-app.get('/contacts', function (req, res) {
+app.get("/contacts", function (req, res) {
     contactModel.find(function (err, docs) {
         if (err) {
             console.log(err);
@@ -23,7 +23,7 @@ app.get('/contacts', function (req, res) {
     });
 });
 
-app.get('/contacts/:sortColumn/:sortDirection', function (req, res) {
+app.get("/contacts/:sortColumn/:sortDirection", function (req, res) {
     var sortColumn = req.params.sortColumn;
     var sortDirection = req.params.sortDirection;
     contactModel.find().sort([[sortColumn, sortDirection]]).exec(function (err, docs) {
@@ -35,7 +35,7 @@ app.get('/contacts/:sortColumn/:sortDirection', function (req, res) {
     });
 });
 
-app.get('/contacts/:_id', function (req, res) {
+app.get("/contacts/:_id", function (req, res) {
     if (req.params._id) {
         contactModel.findById(req.params._id, function (err, doc) {
             if (err) {
@@ -47,7 +47,7 @@ app.get('/contacts/:_id', function (req, res) {
     }
 });
 
-app.post('/contacts', function (req, res) {
+app.post("/contacts", function (req, res) {
     var newContact = new contactModel(req.body);
     contactModel.create(newContact, function (err) {
         if (err) {
@@ -58,7 +58,7 @@ app.post('/contacts', function (req, res) {
     })
 });
 
-app.put('/contacts/:_id', function (req, res) {
+app.put("/contacts/:_id", function (req, res) {
     contactModel.findByIdAndUpdate(req.params._id, req.body, function (err, doc) {
         if (err) {
             console.log(err);
@@ -68,7 +68,7 @@ app.put('/contacts/:_id', function (req, res) {
     });
 });
 
-app.delete('/contacts/:_id', function (req, res) {
+app.delete("/contacts/:_id", function (req, res) {
     contactModel.findByIdAndRemove(req.params._id, function (err, doc) {
         if (err) {
             console.log(err);
@@ -82,6 +82,6 @@ app.listen(3000, function (err) {
     if (err) {
         console.log(err);
     } else {
-        console.log('Listening on port 3000.');
+        console.log("Listening on port 3000.");
     }
 });

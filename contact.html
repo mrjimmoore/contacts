@@ -1,29 +1,29 @@
 <article>
 
-    <section class='container'>
-        <p class='lead'><a href='/contacts/listContacts'><i class='fa fa-users'></i></a>&nbsp;Contacts</p>
-        <p class='lead'>{{ sectionTitle }}</p>
+    <section class="container">
+        <p class="lead"><a href="/contacts/listContacts"><i class="fa fa-users"></i></a>&nbsp;Contacts</p>
+        <p class="lead">{{ sectionTitle }}</p>
     </section>
 
-    <section class='container' ng-model='contact'>
+    <section class="container" ng-model="contact">
 
-        <div class='form-group'>
-            <label for='fullname'>fullname</label>
-            <input id='fullname' class='form-control' type='text' ng-model='contact.fullname' placeholder='enter fullname' focus/>
-        </div>
-
-        <div class='form-group'>
-            <label for='email'>email</label>
-            <input id='email' class='form-control' type='email' ng-model='contact.email' placeholder='Enter email'/>
-        </div>
-
-        <div class='form-group'>
-            <label for='notes'>email</label>
-            <textarea id='notes' class='form-control' rows='3' ng-model='contact.notes' placeholder='Enter notes'></textarea>
+        <div class="form-group">
+            <label for="fullname">fullname</label>
+            <input id="fullname" class="form-control" type="text" ng-model="contact.fullname" placeholder="enter fullname" focus/>
         </div>
 
         <div class="form-group">
-            <button class='btn btn-default' ng-click='saveContact()'>Save</button>
+            <label for="email">email</label>
+            <input id="email" class="form-control" type="email" ng-model="contact.email" placeholder="Enter email"/>
+        </div>
+
+        <div class="form-group">
+            <label for="notes">email</label>
+            <textarea id="notes" class="form-control" rows="3" ng-model="contact.notes" placeholder="Enter notes"></textarea>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-default" ng-click="saveContact()">Save</button>
         </div>
 
     </section>
