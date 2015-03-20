@@ -81,7 +81,6 @@ app.controller("helpController", function ($scope) {
 
 app.controller("contactListController", function ($scope, $window, dataFactory) {
     $("#headerContent").load("contactsHeader.html");
-    $scope.headerContent = "contactsHeader.html";
     $scope.sortColumn = "fullname";
     $scope.sortDescending = false;
     getContacts();
