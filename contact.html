@@ -1,4 +1,4 @@
-<article>
+<form id="myForm">
 
     <section class="container">
         <p class="lead"><a href="/contacts/listContacts"><i class="fa fa-users"></i></a>&nbsp;Contacts</p>
@@ -9,12 +9,13 @@
 
         <div class="form-group">
             <label for="fullname">fullname</label>
-            <input id="fullname" class="form-control" type="text" ng-model="contact.fullname" placeholder="enter fullname" focus/>
+            <input id="fullname" class="form-control" type="text"
+                   ng-model="contact.fullname" placeholder="Enter fullname" required focus/>
         </div>
 
         <div class="form-group">
             <label for="email">email</label>
-            <input id="email" class="form-control" type="email" ng-model="contact.email" placeholder="Enter email"/>
+            <input id="email" class="form-control" type="email" ng-model="contact.email" placeholder="Enter email" required/>
         </div>
 
         <div class="form-group">
@@ -28,4 +29,4 @@
 
     </section>
 
-</article>
+</form>

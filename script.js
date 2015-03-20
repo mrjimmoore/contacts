@@ -53,7 +53,7 @@ app.factory("dataFactory", ["$http", function ($http) {
 // controllers
 
 app.controller("mainController", function ($scope, $location) {
-    $scope.headerContent = "mainHeader.html";
+    $("#headerContent").load("mainHeader.html");
     $scope.navbarTitle = "SPA Example";
     $scope.navbarSubTitle = "using the MEAN Stack";
     $scope.copyrightDate = new Date();
@@ -65,18 +65,22 @@ app.controller("mainController", function ($scope, $location) {
 });
 
 app.controller("homeController", function ($scope) {
+    $("#headerContent").load("mainHeader.html");
     $scope.articleTitle = "Home";
 });
 
 app.controller("aboutController", function ($scope) {
+    $("#headerContent").load("mainHeader.html");
     $scope.articleTitle = "About";
 });
 
 app.controller("helpController", function ($scope) {
+    $("#headerContent").load("mainHeader.html");
     $scope.articleTitle = "Help";
 });
 
 app.controller("contactListController", function ($scope, $window, dataFactory) {
+    $("#headerContent").load("contactsHeader.html");
     $scope.headerContent = "contactsHeader.html";
     $scope.sortColumn = "fullname";
     $scope.sortDescending = false;

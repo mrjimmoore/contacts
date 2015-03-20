@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html ng-app="mainApp" ng-strict-di>
+<html ng-app="mainApp">
 
 <head lang="en">
     <noscript>
@@ -8,12 +8,13 @@
     </noscript>
     <meta charset="UTF-8"/>
     <base href="/contacts/index.html"/>
-    <title>Contacts</title>
+    <title>MyApps</title>
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
     <script src="https://code.angularjs.org/1.3.13/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.3.13/angular-route.min.js"></script>
     <script src="https://code.angularjs.org/1.3.13/angular-resource.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="script.js"></script>
 </head>
 
@@ -34,7 +35,7 @@
 </nav>
 
 <header class="jumbotron">
-    <div class="container" ng-include="headerContent"></div>
+    <div id="headerContent" class="container"></div>
 </header>
 
 <main ng-view></main>
