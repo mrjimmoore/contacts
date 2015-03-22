@@ -9,6 +9,7 @@ app.config(function ($routeProvider, $locationProvider) {
         .when("/", {templateUrl: "home.html", controller: "homeController"})
         .when("/about", {templateUrl: "about.html", controller: "aboutController"})
         .when("/help", {templateUrl: "help.html", controller: "helpController"})
+        .when("/settings", {templateUrl: "settings.html", controller: "settingsController"})
         .when("/addContact", {templateUrl: "contact.html", controller: "contactDetailController"})
         .when("/listContacts", {templateUrl: "contacts.html", controller: "contactListController"})
         .when("/updateContact/:_id", {templateUrl: "contact.html", controller: "contactDetailController"})
@@ -77,6 +78,11 @@ app.controller("aboutController", function ($scope) {
 app.controller("helpController", function ($scope) {
     $("#headerContent").load("mainHeader.html");
     $scope.articleTitle = "Help";
+});
+
+app.controller("settingsController", function ($scope) {
+    $("#headerContent").load("mainHeader.html");
+    $scope.articleTitle = "Settings";
 });
 
 app.controller("contactListController", function ($scope, $window, dataFactory) {

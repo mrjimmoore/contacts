@@ -3,18 +3,30 @@
 <html ng-app="mainApp">
 
 <head lang="en">
-    <noscript>
-        <meta http-equiv="refresh" content="0; URL=noscript.html"/>
-    </noscript>
+    <noscript><meta http-equiv="refresh" content="0; URL=noscript.html"/></noscript>
     <meta charset="UTF-8"/>
     <base href="/contacts/index.html"/>
     <title>MyApps</title>
+    <link rel="icon" href="favicon.ico">
+
+    <!-- The order of the following css and js are important. -->
+
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>-->
+    <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-resource.min.js"></script>-->
+    <!--<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>-->
+
     <link rel="stylesheet" href="cdn/bootstrap-3.3.4-dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="cdn/font-awesome-4.3.0/css/font-awesome.min.css"/>
     <script src="cdn/angular-1.3.15/angular.min.js"></script>
     <script src="cdn/angular-1.3.15/angular-route.min.js"></script>
     <script src="cdn/angular-1.3.15/angular-resource.min.js"></script>
     <script src="cdn/jquery-2.1.3.min.js"></script>
+    <script src="cdn/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+
     <script src="script.js"></script>
 </head>
 
@@ -22,13 +34,25 @@
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
-        <h3 class="navbar-text"><i class="fa fa-coffee"></i>&nbsp;{{ navbarTitle }}&nbsp;<small>{{ navbarSubTitle }}</small>
-        </h3>
+        <h3 class="navbar-text"><i class="fa fa-coffee"></i>&nbsp;{{ navbarTitle }}&nbsp;<small>{{ navbarSubTitle }}</small></h3>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="/contacts/listContacts"><i class="fa fa-users"></i>&nbsp;Contacts</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" id="appsMenu" data-toggle="dropdown"><i class="fa fa-bars"></i>&nbsp;Apps<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="appsMenu">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/contacts/listContacts"><i class="fa fa-users"></i>&nbsp;Contacts</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-bar-chart"></i>&nbsp;Some other app</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-cloud"></i>&nbsp;Some other app</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-graduation-cap"></i>&nbsp;Some other app</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-bug"></i>&nbsp;Some other app</a></li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-envelope"></i>&nbsp;Some other app</a></li>
+                </ul>
+            </li>
+
             <li><a href="/contacts/home"><i class="fa fa-home"></i>&nbsp;Home</a></li>
             <li><a href="/contacts/about"><i class="fa fa-info"></i>&nbsp;About</a></li>
             <li><a href="/contacts/help"><i class="fa fa-comment"></i>&nbsp;Help</a></li>
+            <li><a href="/contacts/settings"><i class="fa fa-cog"></i>&nbsp;Settings</a></li>
         </ul>
     </div>
 </nav>
