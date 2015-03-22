@@ -166,11 +166,11 @@ app.controller("contactDetailController", function ($scope, $routeParams, dataFa
             })
             .error(function (err) {
                 alert("Unable to update contact: " + err.message);
-            })
+            });
     }
 });
 
-// Directives
+// directives
 
 app.directive("jimConfirmClick", [
     function () {
