@@ -1,27 +1,27 @@
 // module
 
-var app = angular.module('mainApp', ['ngRoute']);
+var app = angular.module("mainApp", ["ngRoute"]);
 
 // routes
 
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
-        .when('/', {templateUrl: 'home.html', controller: 'homeController'})
-        .when('/about', {templateUrl: 'about.html', controller: 'aboutController'})
-        .when('/help', {templateUrl: 'help.html', controller: 'helpController'})
-        .when('/addContact', {templateUrl: 'contact.html', controller: 'contactDetailController'})
-        .when('/listContacts', {templateUrl: 'contacts.html', controller: 'contactListController'})
-        .when('/updateContact/:_id', {templateUrl: 'contact.html', controller: 'contactDetailController'})
-        .otherwise({templateUrl: 'home.html', controller: 'homeController'});
+        .when("/", {templateUrl: "home.html", controller: "homeController"})
+        .when("/about", {templateUrl: "about.html", controller: "aboutController"})
+        .when("/help", {templateUrl: "help.html", controller: "helpController"})
+        .when("/settings", {templateUrl: "settings.html", controller: "settingsController"})
+        .when("/addContact", {templateUrl: "contact.html", controller: "contactDetailController"})
+        .when("/listContacts", {templateUrl: "contacts.html", controller: "contactListController"})
+        .when("/updateContact/:_id", {templateUrl: "contact.html", controller: "contactDetailController"})
+        .otherwise({templateUrl: "home.html", controller: "homeController"});
 
-    $locationProvider.html5Mode(true).hashPrefix('!');
+    $locationProvider.html5Mode(true).hashPrefix("!");
 });
 
 // factory
 
-app.factory('dataFactory', ['$http', function ($http) {
-
-    var urlBase = 'http://localhost:3000/contacts';
+app.factory("dataFactory", ["$http", function ($http) {
+    var urlBase = "http://localhost:3000/contacts";
     var dataFactory = {};
 
     dataFactory.getContacts = function () {
@@ -29,11 +29,11 @@ app.factory('dataFactory', ['$http', function ($http) {
     };
 
     dataFactory.getContactsSorted = function (sortColumn, sortDescending) {
-        return $http.get(urlBase + '/' + sortColumn + '/' + (sortDescending ? 'descending' : 'ascending'));
+        return $http.get(urlBase + "/" + sortColumn + "/" + (sortDescending ? "descending" : "ascending"));
     };
 
     dataFactory.getContact = function (id) {
-        return $http.get(urlBase + '/' + id);
+        return $http.get(urlBase + "/" + id);
     };
 
     dataFactory.insertContact = function (contact) {
@@ -41,11 +41,11 @@ app.factory('dataFactory', ['$http', function ($http) {
     };
 
     dataFactory.updateContact = function (contact) {
-        return $http.put(urlBase + '/' + contact._id, contact)
+        return $http.put(urlBase + "/" + contact._id, contact)
     };
 
     dataFactory.deleteContact = function (id) {
-        return $http.delete(urlBase + '/' + id);
+        return $http.delete(urlBase + "/" + id);
     };
 
     return dataFactory;
@@ -53,11 +53,10 @@ app.factory('dataFactory', ['$http', function ($http) {
 
 // controllers
 
-app.controller('mainController', function ($scope, $location) {
-    $scope.navbarTitle = 'SPA Example';
-    $scope.navbarSubTitle = 'using the MEAN Stack';
-    $scope.headerTitle = 'My Apps';
-    $scope.headerMessage = 'Morbi ullamcorper auctor convallis quam turpis molestie eget sem, leo cras velit lacus vulputate imperdiet molestie, gravida suscipit facilisis sagittis per fusce ante.';
+app.controller("mainController", function ($scope, $location) {
+    $("#headerContent").load("mainHeader.html");
+    $scope.navbarTitle = "SPA Example";
+    $scope.navbarSubTitle = "using the MEAN Stack";
     $scope.copyrightDate = new Date();
 
     // Allow the routeProvider to be loaded via ng-click.
@@ -66,22 +65,29 @@ app.controller('mainController', function ($scope, $location) {
     }
 });
 
-app.controller('homeController', function ($scope) {
-    $scope.articleTitle = 'Home';
+app.controller("homeController", function ($scope) {
+    $("#headerContent").load("mainHeader.html");
+    $scope.articleTitle = "Home";
 });
 
-app.controller('aboutController', function ($scope) {
-    $scope.articleTitle = 'About';
+app.controller("aboutController", function ($scope) {
+    $("#headerContent").load("mainHeader.html");
+    $scope.articleTitle = "About";
 });
 
-app.controller('helpController', function ($scope) {
-    $scope.articleTitle = 'Help';
+app.controller("helpController", function ($scope) {
+    $("#headerContent").load("mainHeader.html");
+    $scope.articleTitle = "Help";
 });
 
-app.controller('contactListController', function ($scope, $window, dataFactory) {
-    $scope.articleTitle = 'Contacts';
-    $scope.articleMessage = 'Lorem ipsum potenti odio imperdiet tempor pulvinar metus, per imperdiet nulla mauris pharetra elementum orci, erat lectus bibendum et himenaeos platea interdum turpis elementum nibh interdum rutrum sagittis congue dolor blandit, condimentum mattis imperdiet mi nulla habitasse pellentesque aliquam, sociosqu magna ultricies nam quis phasellus fusce ultrices.'
-    $scope.sortColumn = 'fullname';
+app.controller("settingsController", function ($scope) {
+    $("#headerContent").load("mainHeader.html");
+    $scope.articleTitle = "Settings";
+});
+
+app.controller("contactListController", function ($scope, $window, dataFactory) {
+    $("#headerContent").load("contactsHeader.html");
+    $scope.sortColumn = "fullname";
     $scope.sortDescending = false;
     getContacts();
 
@@ -91,7 +97,7 @@ app.controller('contactListController', function ($scope, $window, dataFactory) 
                 $scope.contacts = docs;
             })
             .error(function (err) {
-                alert('Unable to load data: ' + err.message);
+                alert("Unable to load data: " + err.message);
             });
     }
 
@@ -101,7 +107,7 @@ app.controller('contactListController', function ($scope, $window, dataFactory) 
                 getContacts();
             })
             .error(function (err) {
-                alert('Unable to delete document: ' + err.message);
+                alert("Unable to delete document: " + err.message);
             });
     };
 
@@ -116,12 +122,11 @@ app.controller('contactListController', function ($scope, $window, dataFactory) 
     }
 });
 
-app.controller('contactDetailController', function ($scope, $routeParams, dataFactory) {
-    $scope.articleMessage = 'Lorem ipsum potenti odio imperdiet tempor pulvinar metus, per imperdiet nulla mauris pharetra elementum orci, erat lectus bibendum et himenaeos platea interdum turpis elementum nibh interdum rutrum sagittis congue dolor blandit, condimentum mattis imperdiet mi nulla habitasse pellentesque aliquam, sociosqu magna ultricies nam quis phasellus fusce ultrices.'
+app.controller("contactDetailController", function ($scope, $routeParams, dataFactory) {
     if ($routeParams._id == null) {
-        $scope.articleTitle = 'Add Contact';
+        $scope.sectionTitle = "Add Contact";
     } else {
-        $scope.articleTitle = 'Update Contact';
+        $scope.sectionTitle = "Update Contact";
         getContact($routeParams._id);
     }
 
@@ -139,7 +144,7 @@ app.controller('contactDetailController', function ($scope, $routeParams, dataFa
                 $scope.contact = doc;
             })
             .error(function (err) {
-                alert('Unable to get document: ' + err.message);
+                alert("Unable to get document: " + err.message);
             });
     }
 
@@ -147,10 +152,10 @@ app.controller('contactDetailController', function ($scope, $routeParams, dataFa
         dataFactory.insertContact(contact)
             .success(function (doc) {
                 $scope.contact = doc;
-                $scope.articleTitle = 'Update Contact';
+                $scope.sectionTitle = "Update Contact";
             })
             .error(function (err) {
-                alert('Unable to add a contact: ' + err.message);
+                alert("Unable to add a contact: " + err.message);
             });
     }
 
@@ -160,20 +165,20 @@ app.controller('contactDetailController', function ($scope, $routeParams, dataFa
                 $scope.contact = doc;
             })
             .error(function (err) {
-                alert('Unable to update contact: ' + err.message);
+                alert("Unable to update contact: " + err.message);
             })
     }
 });
 
 // Directives
 
-app.directive('jimConfirmClick', [
+app.directive("jimConfirmClick", [
     function () {
         return {
             priority: -1,
-            restrict: 'A',
+            restrict: "A",
             link: function (scope, element, attrs) {
-                element.bind('click', function (e) {
+                element.bind("click", function (e) {
                     var message = attrs.jimConfirmClick;
                     if (message && !confirm(message)) {
                         e.stopImmediatePropagation();
@@ -184,3 +189,11 @@ app.directive('jimConfirmClick', [
         }
     }
 ]);
+
+app.directive("focus", function () {
+    return {
+        link: function (scope, element, attrs) {
+            element[0].focus();
+        }
+    };
+});
