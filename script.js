@@ -124,11 +124,25 @@ app.controller("contactListController", function ($scope, $window, dataFactory) 
 
 app.controller("contactDetailController", function ($scope, $routeParams, dataFactory) {
     if ($routeParams._id == null) {
-        $scope.sectionTitle = "Add Contact";
+        $scope.sectionTitle = "Add New Contact";
     } else {
         $scope.sectionTitle = "Update Contact";
         getContact($routeParams._id);
     }
+
+    // -----------------------
+    var lastKey = 0;
+
+    $scope.jimKeyPress = function(e) {
+        if (lastKey == 47) { // forward slash
+            if (e.keyCode == 102 || e.keyCode == 70) { // F and f
+                lastKey = 0; // set to null
+                alert ("You entered /f or /F");
+            }
+        }
+        if (e.keyCode != 16) lastKey = e.keyCode; // ignore shift key
+    };
+    // -----------------------
 
     $scope.saveContact = function () {
         if ($scope.contact._id == null) {
