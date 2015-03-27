@@ -54,19 +54,20 @@ app.factory("dataFactory", ["$http", function ($http) {
 // controllers
 
 app.controller("mainController", function ($scope, $location) {
-    $("#headerContent").load("mainHeader.html");
+    //$("#headerContent").load("mainHeader.html");
     $scope.navbarTitle = "SPA Example";
     $scope.navbarSubTitle = "using the MEAN Stack";
     $scope.copyrightDate = new Date();
 
-    // Allow the routeProvider to be loaded via ng-click.
-    $scope.loadView = function (uri) {
-        $location.path(uri);
-    }
+    //// Allow the routeProvider to be loaded via ng-click.
+    //$scope.loadView = function (uri) {
+    //    $location.path(uri);
+    //}
 });
 
-app.controller("homeController", function ($scope) {
-    $("#headerContent").load("mainHeader.html");
+app.controller("homeController", function ($rootScope, $scope) {
+    //$("#headerContent").load("mainHeader.html");
+    $scope.$emit("headerContentChanged", "mainHeader.html");
     $scope.articleTitle = "Home";
 });
 
@@ -86,7 +87,9 @@ app.controller("settingsController", function ($scope) {
 });
 
 app.controller("contactListController", function ($scope, $window, dataFactory) {
-    $("#headerContent").load("contactsHeader.html");
+    //$("#headerContent").load("contactsHeader.html");
+    $scope.$emit("headerContentChanged", "contactsHeader.html");
+
     $scope.sortColumn = "fullname";
     $scope.sortDescending = false;
     getContacts();
@@ -133,11 +136,11 @@ app.controller("contactDetailController", function ($scope, $routeParams, dataFa
     // -----------------------
     var lastKey = 0;
 
-    $scope.jimKeyPress = function(e) {
+    $scope.jimKeyPress = function (e) {
         if (lastKey == 47) { // forward slash
             if (e.keyCode == 102 || e.keyCode == 70) { // F and f
                 lastKey = 0; // set to null
-                alert ("You entered /f or /F");
+                alert("You entered /f or /F");
             }
         }
         if (e.keyCode != 16) lastKey = e.keyCode; // ignore shift key
@@ -208,6 +211,39 @@ app.directive("focus", function () {
     return {
         link: function (scope, element, attrs) {
             element[0].focus();
+        }
+    };
+});
+
+app.directive("xxxjimHeaderContent", function () {
+    return {
+        templateUrl: function () {
+            return jimHeaderContentUrl
+        }
+    }
+});
+
+app.directive("xxxjimHeaderContent", function () {
+    scope.$on("headerContentChanged", function (event, data) {
+        alert("From directive event listener");
+        return {
+            templateUrl: function () {
+                return data;
+            }
+        }
+    });
+});
+
+app.directive('jimHeaderContent', function () {
+    return {
+        restrict: 'A',
+        transclude: true,
+        //templateUrl: "contactsHeader.html",
+        link: function (scope, element, attrs) {
+            scope.$on("headerContentChanged", function (event, data) {
+                //alert(data);
+                return {templateUrl: data};
+            });
         }
     };
 });
