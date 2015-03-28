@@ -204,7 +204,6 @@ app.directive("jimHotKeys", function () {
 
     // insert text at cursor of element and remove the 2 character hot key sequence
     function insertAtCursor(element, myValue, event) {
-        //var myValue = "[/f here]";
         if (element.selectionStart || element.selectionStart == '0') {
             var startPos = element.selectionStart - 1; // -1 to remove the first hot key character
             var endPos = element.selectionEnd;
@@ -251,27 +250,3 @@ app.directive("jimHeaderContent", function () {
     }
     return directive;
 });
-
-$.fn.extend({
-    insertAtCaret: function (myValue) {
-        if (document.selection) {
-            this.focus();
-            sel = document.selection.createRange();
-            sel.text = myValue;
-            this.focus();
-        }
-        else if (this.selectionStart || this.selectionStart == '0') {
-            var startPos = this.selectionStart;
-            var endPos = this.selectionEnd;
-            var scrollTop = this.scrollTop;
-            this.value = this.value.substring(0, startPos) + myValue + this.value.substring(endPos, this.value.length);
-            this.focus();
-            this.selectionStart = startPos + myValue.length;
-            this.selectionEnd = startPos + myValue.length;
-            this.scrollTop = scrollTop;
-        } else {
-            this.value += myValue;
-            this.focus();
-        }
-    }
-})
