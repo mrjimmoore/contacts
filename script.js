@@ -133,20 +133,6 @@ app.controller("contactDetailController", function ($scope, $routeParams, dataFa
         getContact($routeParams._id);
     }
 
-    // -----------------------
-    var lastKey = 0;
-
-    $scope.jimKeyPress = function (e) {
-        if (lastKey == 47) { // forward slash
-            if (e.keyCode == 102 || e.keyCode == 70) { // F and f
-                lastKey = 0; // set to null
-                alert("You entered /f or /F");
-            }
-        }
-        if (e.keyCode != 16) lastKey = e.keyCode; // ignore shift key
-    };
-    // -----------------------
-
     $scope.saveContact = function () {
         if ($scope.contact._id == null) {
             addContact($scope.contact);
@@ -223,27 +209,36 @@ app.directive("xxxjimHeaderContent", function () {
     }
 });
 
-app.directive("xxxjimHeaderContent", function () {
-    scope.$on("headerContentChanged", function (event, data) {
-        alert("From directive event listener");
-        return {
-            templateUrl: function () {
-                return data;
-            }
-        }
-    });
+app.directive("jimHeaderContent", function () {
+    var directive = {};
+
+    directive.restrict = "A";
+    directive.transclude = true;
+    directive.templateUrl = "mainHeader.html";
+    directive.link = function (scope, element, attributes) {
+        scope.$on("headerContentChanged", function (event, data) {
+            //alert(data);
+            directive.templateUrl = data;
+        });
+    }
+
+    return directive;
 });
 
-app.directive('jimHeaderContent', function () {
+app.directive("jimHotKeys", function () {
+    var lastKey = 0;
+
     return {
-        restrict: 'A',
-        transclude: true,
-        //templateUrl: "contactsHeader.html",
-        link: function (scope, element, attrs) {
-            scope.$on("headerContentChanged", function (event, data) {
-                //alert(data);
-                return {templateUrl: data};
-            });
+        link: function (scope, element, attributes) {
+            element.on("keypress", function (event) {
+                if (lastKey == 47) { // forward slash
+                    if (event.keyCode == 70 || event.keyCode == 102) { // F and f
+                        lastKey = 0; // set to null
+                        alert("You entered /f or /F");
+                    }
+                }
+                if (event.keyCode != 16) lastKey = event.keyCode; // ignore shift key
+            })
         }
-    };
+    }
 });
