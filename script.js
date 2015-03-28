@@ -66,30 +66,27 @@ app.controller("mainController", function ($scope, $location) {
 });
 
 app.controller("homeController", function ($rootScope, $scope) {
-    //$("#headerContent").load("mainHeader.html");
     $scope.$emit("headerContentChanged", "mainHeader.html");
     $scope.articleTitle = "Home";
 });
 
 app.controller("aboutController", function ($scope) {
-    $("#headerContent").load("mainHeader.html");
+    $scope.$emit("headerContentChanged", "mainHeader.html");
     $scope.articleTitle = "About";
 });
 
 app.controller("helpController", function ($scope) {
-    $("#headerContent").load("mainHeader.html");
+    $scope.$emit("headerContentChanged", "mainHeader.html");
     $scope.articleTitle = "Help";
 });
 
 app.controller("settingsController", function ($scope) {
-    $("#headerContent").load("mainHeader.html");
+    $scope.$emit("headerContentChanged", "mainHeader.html");
     $scope.articleTitle = "Settings";
 });
 
 app.controller("contactListController", function ($scope, $window, dataFactory) {
-    //$("#headerContent").load("contactsHeader.html");
     $scope.$emit("headerContentChanged", "contactsHeader.html");
-
     $scope.sortColumn = "fullname";
     $scope.sortDescending = false;
     getContacts();
@@ -175,56 +172,33 @@ app.controller("contactDetailController", function ($scope, $routeParams, dataFa
 
 // directives
 
-app.directive("jimConfirmClick", [
-    function () {
-        return {
-            priority: -1,
-            restrict: "A",
-            link: function (scope, element, attrs) {
-                element.bind("click", function (e) {
-                    var message = attrs.jimConfirmClick;
-                    if (message && !confirm(message)) {
-                        e.stopImmediatePropagation();
-                        e.preventDefault();
-                    }
-                });
-            }
-        }
-    }
-]);
-
+// sets initial focus on page load
 app.directive("focus", function () {
     return {
-        link: function (scope, element, attrs) {
+        link: function (scope, element, attributes) {
             element[0].focus();
         }
     };
 });
 
-app.directive("xxxjimHeaderContent", function () {
+// confirmation dialog with custom message
+app.directive("jimConfirmClick", function () {
     return {
-        templateUrl: function () {
-            return jimHeaderContentUrl
+        priority: -1,
+        restrict: "A",
+        link: function (scope, element, attributes) {
+            element.bind("click", function (event) {
+                var message = attributes.jimConfirmClick;
+                if (message && !confirm(message)) {
+                    event.stopImmediatePropagation();
+                    event.preventDefault();
+                }
+            });
         }
     }
 });
 
-app.directive("jimHeaderContent", function () {
-    var directive = {};
-
-    directive.restrict = "A";
-    directive.transclude = true;
-    directive.templateUrl = "mainHeader.html";
-    directive.link = function (scope, element, attributes) {
-        scope.$on("headerContentChanged", function (event, data) {
-            //alert(data);
-            directive.templateUrl = data;
-        });
-    }
-
-    return directive;
-});
-
+// inspects each keystroke and inserts text at the point of special key sequences
 app.directive("jimHotKeys", function () {
     var lastKey = 0;
 
@@ -234,11 +208,28 @@ app.directive("jimHotKeys", function () {
                 if (lastKey == 47) { // forward slash
                     if (event.keyCode == 70 || event.keyCode == 102) { // F and f
                         lastKey = 0; // set to null
-                        alert("You entered /f or /F");
+                        //element.text("dddddddd");
+                        alert("You entered /f or /F:" + element.html());
                     }
                 }
                 if (event.keyCode != 16) lastKey = event.keyCode; // ignore shift key
             })
         }
     }
+});
+
+// attribute that loads a templateUrl into the control
+app.directive("jimHeaderContent", function () {
+    var directive = {};
+
+    directive.restrict = "A";
+    directive.transclude = true;
+    directive.templateUrl = "mainHeader.html"; // default header
+    directive.link = function (scope, element, attributes) {
+        scope.$on("headerContentChanged", function (event, data) {
+            //alert(data);
+            directive.templateUrl = data;
+        });
+    }
+    return directive;
 });
