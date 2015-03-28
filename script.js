@@ -189,7 +189,7 @@ app.directive("jimConfirmClick", function () {
         link: function (scope, element, attributes) {
             element.bind("click", function (event) {
                 var message = attributes.jimConfirmClick;
-                if (message && !confirm(message)) {
+                if (!confirm(message)) {
                     event.stopImmediatePropagation();
                     event.preventDefault();
                 }
@@ -202,14 +202,30 @@ app.directive("jimConfirmClick", function () {
 app.directive("jimHotKeys", function () {
     var lastKey = 0;
 
+    function insertAtCursor(element, myValue) {
+        //var myValue = "[/f here]";
+        if (element.selectionStart || element.selectionStart == '0') {
+            var startPos = element.selectionStart;
+            var endPos = element.selectionEnd;
+            var scrollTop = element.scrollTop;
+            element.value = element.value.substring(0, startPos) + myValue + element.value.substring(endPos, element.value.length);
+            element.focus();
+            element.selectionStart = startPos + myValue.length;
+            element.selectionEnd = startPos + myValue.length;
+            element.scrollTop = scrollTop;
+        } else {
+            element.value += myValue;
+            element.focus();
+        }
+    }
+
     return {
         link: function (scope, element, attributes) {
             element.on("keypress", function (event) {
                 if (lastKey == 47) { // forward slash
                     if (event.keyCode == 70 || event.keyCode == 102) { // F and f
                         lastKey = 0; // set to null
-                        //element.text("dddddddd");
-                        alert("You entered /f or /F:" + element.html());
+                        insertAtCursor(this, "[/f here]");
                     }
                 }
                 if (event.keyCode != 16) lastKey = event.keyCode; // ignore shift key
@@ -233,3 +249,27 @@ app.directive("jimHeaderContent", function () {
     }
     return directive;
 });
+
+$.fn.extend({
+    insertAtCaret: function (myValue) {
+        if (document.selection) {
+            this.focus();
+            sel = document.selection.createRange();
+            sel.text = myValue;
+            this.focus();
+        }
+        else if (this.selectionStart || this.selectionStart == '0') {
+            var startPos = this.selectionStart;
+            var endPos = this.selectionEnd;
+            var scrollTop = this.scrollTop;
+            this.value = this.value.substring(0, startPos) + myValue + this.value.substring(endPos, this.value.length);
+            this.focus();
+            this.selectionStart = startPos + myValue.length;
+            this.selectionEnd = startPos + myValue.length;
+            this.scrollTop = scrollTop;
+        } else {
+            this.value += myValue;
+            this.focus();
+        }
+    }
+})
