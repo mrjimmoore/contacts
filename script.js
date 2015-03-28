@@ -68,6 +68,7 @@ app.controller("mainController", function ($scope, $location) {
 app.controller("homeController", function ($rootScope, $scope) {
     $scope.$emit("headerContentChanged", "mainHeader.html");
     $scope.articleTitle = "Home";
+    $scope.testMessage = "Test message...";
 });
 
 app.controller("aboutController", function ($scope) {
@@ -200,7 +201,7 @@ app.directive("jimConfirmClick", function () {
 
 // inspects each keystroke and inserts text at the point of special key sequences
 app.directive("jimHotKeys", function () {
-    var lastKey = 0;
+    var lastKeyCode = 0;
 
     // insert text at cursor of element and remove the 2 character hot key sequence
     function insertAtCursor(element, myValue, event) {
@@ -220,16 +221,17 @@ app.directive("jimHotKeys", function () {
         event.preventDefault();
     }
 
+    // evaluate each keystroke
     return {
         link: function (scope, element, attributes) {
             element.on("keypress", function (event) {
-                if (lastKey == 47) { // forward slash
-                    if (event.keyCode == 70 || event.keyCode == 102) { // F and f
-                        lastKey = 0; // set to null
+                if (lastKeyCode == 47) { // forward slash
+                    if (event.keyCode == 70 || event.keyCode == 102) { // F or f
+                        lastKeyCode = 0; // set to null
                         insertAtCursor(this, "[/f here]", event);
                     }
                 }
-                if (!event.shiftKey) lastKey = event.keyCode; // ignore shift key
+                if (!event.shiftKey) lastKeyCode = event.keyCode; // ignore shift key
             })
         }
     }
@@ -237,16 +239,15 @@ app.directive("jimHotKeys", function () {
 
 // attribute that loads a templateUrl into the control
 app.directive("jimHeaderContent", function () {
-    var directive = {};
+    return {
+        restrict: "A",
+        link: function (scope, element, attributes) {
+            element.load("mainHeader.html");
 
-    directive.restrict = "A";
-    directive.transclude = true;
-    directive.templateUrl = "mainHeader.html"; // default header
-    directive.link = function (scope, element, attributes) {
-        scope.$on("headerContentChanged", function (event, data) {
-            //alert(data);
-            directive.templateUrl = data;
-        });
+            //scope.$on("headerContentChanged", function (event, data) {
+            //    element.load(data);
+            //    $compile(element.contents())(scope);
+            //});
+        }
     }
-    return directive;
 });
