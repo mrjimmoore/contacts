@@ -203,7 +203,7 @@ app.directive("jimHotKeys", function () {
     var lastKey = 0;
 
     // insert text at cursor of element and remove the 2 character hot key sequence
-    function insertAtCursor(element, myValue) {
+    function insertAtCursor(element, myValue, event) {
         //var myValue = "[/f here]";
         if (element.selectionStart || element.selectionStart == '0') {
             var startPos = element.selectionStart - 1; // -1 to remove the first hot key character
@@ -218,6 +218,7 @@ app.directive("jimHotKeys", function () {
             element.value += myValue;
             element.focus();
         }
+        event.preventDefault();
     }
 
     return {
@@ -226,7 +227,7 @@ app.directive("jimHotKeys", function () {
                 if (lastKey == 47) { // forward slash
                     if (event.keyCode == 70 || event.keyCode == 102) { // F and f
                         lastKey = 0; // set to null
-                        insertAtCursor(this, "[/f here]");
+                        insertAtCursor(this, "[/f here]", event);
                     }
                 }
                 if (!event.shiftKey) lastKey = event.keyCode; // ignore shift key
