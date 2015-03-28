@@ -202,10 +202,11 @@ app.directive("jimConfirmClick", function () {
 app.directive("jimHotKeys", function () {
     var lastKey = 0;
 
+    // insert text at cursor of element and remove the 2 character hot key sequence
     function insertAtCursor(element, myValue) {
         //var myValue = "[/f here]";
         if (element.selectionStart || element.selectionStart == '0') {
-            var startPos = element.selectionStart;
+            var startPos = element.selectionStart - 1; // -1 to remove the first hot key character
             var endPos = element.selectionEnd;
             var scrollTop = element.scrollTop;
             element.value = element.value.substring(0, startPos) + myValue + element.value.substring(endPos, element.value.length);
@@ -228,7 +229,7 @@ app.directive("jimHotKeys", function () {
                         insertAtCursor(this, "[/f here]");
                     }
                 }
-                if (event.keyCode != 16) lastKey = event.keyCode; // ignore shift key
+                if (!event.shiftKey) lastKey = event.keyCode; // ignore shift key
             })
         }
     }
