@@ -54,39 +54,40 @@ app.factory("dataFactory", ["$http", function ($http) {
 // controllers
 
 app.controller("mainController", function ($scope, $location) {
-    $("#headerContent").load("mainHeader.html");
+    //$("#headerContent").load("mainHeader.html");
     $scope.navbarTitle = "SPA Example";
     $scope.navbarSubTitle = "using the MEAN Stack";
     $scope.copyrightDate = new Date();
 
-    // Allow the routeProvider to be loaded via ng-click.
-    $scope.loadView = function (uri) {
-        $location.path(uri);
-    }
+    //// Allow the routeProvider to be loaded via ng-click.
+    //$scope.loadView = function (uri) {
+    //    $location.path(uri);
+    //}
 });
 
-app.controller("homeController", function ($scope) {
-    $("#headerContent").load("mainHeader.html");
+app.controller("homeController", function ($rootScope, $scope) {
+    $scope.$emit("headerContentChanged", "mainHeader.html");
     $scope.articleTitle = "Home";
+    $scope.testMessage = "Test message...";
 });
 
 app.controller("aboutController", function ($scope) {
-    $("#headerContent").load("mainHeader.html");
+    $scope.$emit("headerContentChanged", "mainHeader.html");
     $scope.articleTitle = "About";
 });
 
 app.controller("helpController", function ($scope) {
-    $("#headerContent").load("mainHeader.html");
+    $scope.$emit("headerContentChanged", "mainHeader.html");
     $scope.articleTitle = "Help";
 });
 
 app.controller("settingsController", function ($scope) {
-    $("#headerContent").load("mainHeader.html");
+    $scope.$emit("headerContentChanged", "mainHeader.html");
     $scope.articleTitle = "Settings";
 });
 
 app.controller("contactListController", function ($scope, $window, dataFactory) {
-    $("#headerContent").load("contactsHeader.html");
+    $scope.$emit("headerContentChanged", "contactsHeader.html");
     $scope.sortColumn = "fullname";
     $scope.sortDescending = false;
     getContacts();
@@ -124,7 +125,7 @@ app.controller("contactListController", function ($scope, $window, dataFactory) 
 
 app.controller("contactDetailController", function ($scope, $routeParams, dataFactory) {
     if ($routeParams._id == null) {
-        $scope.sectionTitle = "Add Contact";
+        $scope.sectionTitle = "Add New Contact";
     } else {
         $scope.sectionTitle = "Update Contact";
         getContact($routeParams._id);
@@ -172,28 +173,81 @@ app.controller("contactDetailController", function ($scope, $routeParams, dataFa
 
 // directives
 
-app.directive("jimConfirmClick", [
-    function () {
-        return {
-            priority: -1,
-            restrict: "A",
-            link: function (scope, element, attrs) {
-                element.bind("click", function (e) {
-                    var message = attrs.jimConfirmClick;
-                    if (message && !confirm(message)) {
-                        e.stopImmediatePropagation();
-                        e.preventDefault();
-                    }
-                });
-            }
-        }
-    }
-]);
-
+// sets initial focus on page load
 app.directive("focus", function () {
     return {
-        link: function (scope, element, attrs) {
+        link: function (scope, element, attributes) {
             element[0].focus();
         }
     };
+});
+
+// confirmation dialog with custom message
+app.directive("jimConfirmClick", function () {
+    return {
+        priority: -1,
+        restrict: "A",
+        link: function (scope, element, attributes) {
+            element.bind("click", function (event) {
+                var message = attributes.jimConfirmClick;
+                if (!confirm(message)) {
+                    event.stopImmediatePropagation();
+                    event.preventDefault();
+                }
+            });
+        }
+    }
+});
+
+// inspects each keystroke and inserts text at the point of special key sequences
+app.directive("jimHotKeys", function () {
+    var lastKeyCode = 0;
+
+    // insert text at cursor of element and remove the 2 character hot key sequence
+    function insertAtCursor(element, myValue, event) {
+        if (element.selectionStart || element.selectionStart == '0') {
+            var startPos = element.selectionStart - 1; // -1 to remove the first hot key character
+            var endPos = element.selectionEnd;
+            var scrollTop = element.scrollTop;
+            element.value = element.value.substring(0, startPos) + myValue + element.value.substring(endPos, element.value.length);
+            element.focus();
+            element.selectionStart = startPos + myValue.length;
+            element.selectionEnd = startPos + myValue.length;
+            element.scrollTop = scrollTop;
+        } else {
+            element.value += myValue;
+            element.focus();
+        }
+        event.preventDefault();
+    }
+
+    // evaluate each keystroke
+    return {
+        link: function (scope, element, attributes) {
+            element.on("keypress", function (event) {
+                if (lastKeyCode == 47) { // forward slash
+                    if (event.keyCode == 70 || event.keyCode == 102) { // F or f
+                        lastKeyCode = 0; // set to null
+                        insertAtCursor(this, "[/f here]", event);
+                    }
+                }
+                if (!event.shiftKey) lastKeyCode = event.keyCode; // ignore shift key
+            })
+        }
+    }
+});
+
+// attribute that loads a templateUrl into the control
+app.directive("jimHeaderContent", function () {
+    return {
+        restrict: "A",
+        link: function (scope, element, attributes) {
+            element.load("mainHeader.html");
+
+            //scope.$on("headerContentChanged", function (event, data) {
+            //    element.load(data);
+            //    $compile(element.contents())(scope);
+            //});
+        }
+    }
 });

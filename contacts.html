@@ -1,21 +1,21 @@
 <article>
 
-    <section class='container'>
+    <section class="container">
         <p class="lead"><a href="/contacts/addContact"><i class="fa fa-user-plus"></i></a>&nbsp;Add New Contact</p>
     </section>
 
-    <section class='container'>
-        <table class='table table-striped table table-hover'>
+    <section class="container">
+        <table class="table table-striped table table-hover">
 
             <thead>
                 <tr>
                     <th>
-                        <a href='#' ng-click="changeSorting('fullname')">fullname
+                        <a href="#" ng-click="changeSorting('fullname')">fullname
                             <i ng-show="sortColumn == 'fullname'" ng-class="sortDescending ? 'fa fa-sort-desc' : 'fa fa-sort-asc'"></i>
                         </a>
                     </th>
                     <th>
-                        <a href='#' ng-click="changeSorting('email')">email
+                        <a href="#" ng-click="changeSorting('email')">email
                             <i ng-show="sortColumn == 'email'" ng-class="sortDescending ? 'fa fa-sort-desc' : 'fa fa-sort-asc'"></i>
                         </a>
                     </th>
@@ -23,13 +23,13 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat='contact in contacts'>
+                <tr ng-repeat="contact in contacts">
                     <td>
-                        <a href='/contacts/listContacts' ng-click='deleteContact($index)' jim-confirm-click='Delete {{contact.fullname}}?'>
-                            <i class='fa fa-user-times'></i>
+                        <a href="/contacts/listContacts" ng-click="deleteContact($index)" jim-confirm-click="Delete {{contact.fullname}}?">
+                            <i class="fa fa-user-times"></i>
                         </a>
                         &nbsp;
-                        <a href='/contacts/updateContact/{{ contact._id }}' class='navbar-link'>{{ contact.fullname }}</a>
+                        <a href="/contacts/updateContact/{{ contact._id }}" class="navbar-link">{{ contact.fullname }}</a>
                     </td>
                     <td>{{ contact.email }}</td>
                 </tr>
