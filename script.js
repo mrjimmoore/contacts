@@ -54,8 +54,6 @@ app.factory("dataFactory", ["$http", function ($http) {
 // controllers
 
 app.controller("mainController", function ($scope, $location) {
-    $scope.navbarTitle = "SPA Example";
-    $scope.navbarSubTitle = "using the MEAN Stack";
     $scope.copyrightDate = new Date();
 
     //// alternative to templateUrl by allowing the routeProvider to be loaded via ng-click.
