@@ -54,12 +54,9 @@ app.factory("dataFactory", ["$http", function ($http) {
 // controllers
 
 app.controller("mainController", function ($scope, $location) {
-    //$("#headerContent").load("mainHeader.html");
-    $scope.navbarTitle = "SPA Example";
-    $scope.navbarSubTitle = "using the MEAN Stack";
     $scope.copyrightDate = new Date();
 
-    //// Allow the routeProvider to be loaded via ng-click.
+    //// alternative to templateUrl by allowing the routeProvider to be loaded via ng-click.
     //$scope.loadView = function (uri) {
     //    $location.path(uri);
     //}
@@ -67,23 +64,19 @@ app.controller("mainController", function ($scope, $location) {
 
 app.controller("homeController", function ($rootScope, $scope) {
     $("#headerContent").load("mainHeader.html");
-    $scope.articleTitle = "Home";
-    $scope.testMessage = "Test message...";
+    //$compile($("#headerContent"))($scope);
 });
 
 app.controller("aboutController", function ($scope) {
     $("#headerContent").load("mainHeader.html");
-    $scope.articleTitle = "About";
 });
 
 app.controller("helpController", function ($scope) {
     $("#headerContent").load("mainHeader.html");
-    $scope.articleTitle = "Help";
 });
 
 app.controller("settingsController", function ($scope) {
     $("#headerContent").load("mainHeader.html");
-    $scope.articleTitle = "Settings";
 });
 
 app.controller("contactListController", function ($scope, $window, dataFactory) {
@@ -228,7 +221,7 @@ app.directive("jimHotKeys", function () {
                 if (lastKeyCode == 47) { // forward slash
                     if (event.keyCode == 70 || event.keyCode == 102) { // F or f
                         lastKeyCode = 0; // set to null
-                        insertAtCursor(this, "[/f was entered here]", event);
+                        insertAtCursor(this, "[/f here]", event);
                     }
                 }
                 if (!event.shiftKey) lastKeyCode = event.keyCode; // ignore shift key
