@@ -54,40 +54,33 @@ app.factory("dataFactory", ["$http", function ($http) {
 // controllers
 
 app.controller("mainController", function ($scope, $location) {
-    //$("#headerContent").load("mainHeader.html");
-    $scope.navbarTitle = "SPA Example";
-    $scope.navbarSubTitle = "using the MEAN Stack";
     $scope.copyrightDate = new Date();
 
-    //// Allow the routeProvider to be loaded via ng-click.
+    //// alternative to templateUrl by allowing the routeProvider to be loaded via ng-click.
     //$scope.loadView = function (uri) {
     //    $location.path(uri);
     //}
 });
 
 app.controller("homeController", function ($rootScope, $scope) {
-    $scope.$emit("headerContentChanged", "mainHeader.html");
-    $scope.articleTitle = "Home";
-    $scope.testMessage = "Test message...";
+    $("#headerContent").load("mainHeader.html");
+    //$compile($("#headerContent"))($scope);
 });
 
 app.controller("aboutController", function ($scope) {
-    $scope.$emit("headerContentChanged", "mainHeader.html");
-    $scope.articleTitle = "About";
+    $("#headerContent").load("mainHeader.html");
 });
 
 app.controller("helpController", function ($scope) {
-    $scope.$emit("headerContentChanged", "mainHeader.html");
-    $scope.articleTitle = "Help";
+    $("#headerContent").load("mainHeader.html");
 });
 
 app.controller("settingsController", function ($scope) {
-    $scope.$emit("headerContentChanged", "mainHeader.html");
-    $scope.articleTitle = "Settings";
+    $("#headerContent").load("mainHeader.html");
 });
 
 app.controller("contactListController", function ($scope, $window, dataFactory) {
-    $scope.$emit("headerContentChanged", "contactsHeader.html");
+    $("#headerContent").load("contactsHeader.html");
     $scope.sortColumn = "fullname";
     $scope.sortDescending = false;
     getContacts();
@@ -233,21 +226,6 @@ app.directive("jimHotKeys", function () {
                 }
                 if (!event.shiftKey) lastKeyCode = event.keyCode; // ignore shift key
             })
-        }
-    }
-});
-
-// attribute that loads a templateUrl into the control
-app.directive("jimHeaderContent", function () {
-    return {
-        restrict: "A",
-        link: function (scope, element, attributes) {
-            element.load("mainHeader.html");
-
-            //scope.$on("headerContentChanged", function (event, data) {
-            //    element.load(data);
-            //    $compile(element.contents())(scope);
-            //});
         }
     }
 });
