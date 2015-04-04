@@ -3,7 +3,7 @@ var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 var cors = require("cors");  // Facilitates cross port communication
 
-mongoose.connect("mongodb://localhost/myContacts");
+mongoose.connect("mongodb://localhost/myApps");
 
 var contactSchema = { fullname: String, email: String, notes: String };
 var contactModel = mongoose.model("contact", contactSchema, "contact");

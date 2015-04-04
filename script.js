@@ -66,28 +66,28 @@ app.controller("mainController", function ($scope, $location) {
 });
 
 app.controller("homeController", function ($rootScope, $scope) {
-    $scope.$emit("headerContentChanged", "mainHeader.html");
+    $("#headerContent").load("mainHeader.html");
     $scope.articleTitle = "Home";
     $scope.testMessage = "Test message...";
 });
 
 app.controller("aboutController", function ($scope) {
-    $scope.$emit("headerContentChanged", "mainHeader.html");
+    $("#headerContent").load("mainHeader.html");
     $scope.articleTitle = "About";
 });
 
 app.controller("helpController", function ($scope) {
-    $scope.$emit("headerContentChanged", "mainHeader.html");
+    $("#headerContent").load("mainHeader.html");
     $scope.articleTitle = "Help";
 });
 
 app.controller("settingsController", function ($scope) {
-    $scope.$emit("headerContentChanged", "mainHeader.html");
+    $("#headerContent").load("mainHeader.html");
     $scope.articleTitle = "Settings";
 });
 
 app.controller("contactListController", function ($scope, $window, dataFactory) {
-    $scope.$emit("headerContentChanged", "contactsHeader.html");
+    $("#headerContent").load("contactsHeader.html");
     $scope.sortColumn = "fullname";
     $scope.sortDescending = false;
     getContacts();
@@ -228,26 +228,11 @@ app.directive("jimHotKeys", function () {
                 if (lastKeyCode == 47) { // forward slash
                     if (event.keyCode == 70 || event.keyCode == 102) { // F or f
                         lastKeyCode = 0; // set to null
-                        insertAtCursor(this, "[/f here]", event);
+                        insertAtCursor(this, "[/f was entered here]", event);
                     }
                 }
                 if (!event.shiftKey) lastKeyCode = event.keyCode; // ignore shift key
             })
-        }
-    }
-});
-
-// attribute that loads a templateUrl into the control
-app.directive("jimHeaderContent", function () {
-    return {
-        restrict: "A",
-        link: function (scope, element, attributes) {
-            element.load("mainHeader.html");
-
-            //scope.$on("headerContentChanged", function (event, data) {
-            //    element.load(data);
-            //    $compile(element.contents())(scope);
-            //});
         }
     }
 });
