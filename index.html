@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 
-<html ng-app="mainApp" xmlns="http://www.w3.org/1999/html">
+<html ng-app="myApps" xmlns="http://www.w3.org/1999/html">
 
 <head lang="en">
     <noscript>
         <meta http-equiv="refresh" content="0; URL=noscript.html"/>
     </noscript>
     <meta charset="UTF-8"/>
-    <base href="/contacts/index.html"/>
+    <base href="/myApps/index.html"/>
     <title>My Apps</title>
     <link rel="icon" href="favicon.ico">
 
@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="cdn/bootstrap-3.3.4-dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="cdn/bootstrap-3.3.4-dist/css/jumbotron.css"/>
     <link rel="stylesheet" href="cdn/font-awesome-4.3.0/css/font-awesome.min.css"/>
+
     <script src="cdn/angular-1.3.15/angular.min.js"></script>
     <script src="cdn/angular-1.3.15/angular-route.min.js"></script>
     <script src="cdn/angular-1.3.15/angular-resource.min.js"></script>
@@ -34,6 +35,12 @@
     <script src="cdn/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
 
     <script src="script.js"></script>
+    <script src="controllers.js"></script>
+    <script src="contacts/controllers.js"></script>
+    <script src="contacts/dataFactory.js"></script>
+    <script src="directives/focus.js"></script>
+    <script src="directives/jimHotKeys.js"></script>
+    <script src="directives/jimConfirmClick.js"></script>
 </head>
 
 <body ng-controller="mainController">
@@ -48,7 +55,7 @@
                 <a class="dropdown-toggle" id="appsMenu" data-toggle="dropdown" href="#"><i class="fa fa-coffee"></i> Apps<span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="appsMenu">
                     <li role="presentation">
-                        <a role="menuitem" tabindex="-1" href="/contacts/listContacts"><i class="fa fa-users"></i> Contacts</a>
+                        <a role="menuitem" tabindex="-1" href="/myApps/contacts"><i class="fa fa-users"></i> Contacts</a>
                     </li>
                     <li role="presentation">
                         <a role="menuitem" tabindex="-1" href="#"><i class="fa fa-calendar"></i> Calendar</a>
@@ -71,10 +78,10 @@
                     </li>
                 </ul>
             </li>
-            <li><a href="/contacts/home"><i class="fa fa-home"></i> Home</a></li>
-            <li><a href="/contacts/about"><i class="fa fa-info"></i> About</a></li>
-            <li><a href="/contacts/help"><i class="fa fa-comment"></i> Help</a></li>
-            <li><a href="/contacts/settings"><i class="fa fa-cog"></i> Settings</a></li>
+            <li><a href="/myApps/home"><i class="fa fa-home"></i> Home</a></li>
+            <li><a href="/myApps/about"><i class="fa fa-info"></i> About</a></li>
+            <li><a href="/myApps/help"><i class="fa fa-comment"></i> Help</a></li>
+            <li><a href="/myApps/settings"><i class="fa fa-cog"></i> Settings</a></li>
         </ul>
     </div>
 </nav>
