@@ -1,8 +1,8 @@
 #################
-## Exclude specific folders
+## Jim: Exclude specific folders
 #################
 
-node/node_modules
+contacts/node/node_modules
 cdn
 .idea
 
