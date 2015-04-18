@@ -22,4 +22,4 @@ app.controller("helpController", function ($scope) {
 
 app.controller("settingsController", function ($scope) {
     $("#headerContent").load("header.html");
-});;
+});

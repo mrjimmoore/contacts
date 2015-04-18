@@ -22,4 +22,4 @@ app.config(function ($routeProvider, $locationProvider) {
         .otherwise({templateUrl: "home.html", controller: "homeController"});
 
     $locationProvider.html5Mode(true).hashPrefix("!");
-});;
+});
