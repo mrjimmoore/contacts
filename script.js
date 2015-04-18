@@ -14,7 +14,7 @@ app.config(function ($routeProvider, $locationProvider) {
         .when("/contacts/contact", {templateUrl: "contacts/default.html", controller: "contactController"})
         .when("/contacts/contact/:_id", {templateUrl: "contacts/default.html", controller: "contactController"})
         .when("/calendar", {templateUrl: "calendar/default.html", controller: "calendarController"})
-        .when("/dog", {templateUrl: "dog/default.html", controller: "documentsController"})
+        .when("/documents", {templateUrl: "documents/default.html", controller: "documentsController"})
         .when("/training", {templateUrl: "training/default.html", controller: "trainingController"})
         .when("/support", {templateUrl: "support/default.html", controller: "supportController"})
         .when("/feedback", {templateUrl: "feedback/default.html", controller: "feedbackController"})
