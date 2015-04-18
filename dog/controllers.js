@@ -1,3 +1,3 @@
 app.controller("documentsController", function ($scope) {
-    $("#headerContent").load("documents/header.html");
+    $("#headerContent").load("dog/header.html");
 });
