@@ -27,7 +27,6 @@
     <link rel="stylesheet" href="cdn/bootstrap-3.3.4-dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="cdn/bootstrap-3.3.4-dist/css/jumbotron.css"/>
     <link rel="stylesheet" href="cdn/font-awesome-4.3.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="cdn/jim.css"/>
 
     <script src="cdn/angular-1.3.15/angular.min.js"></script>
     <script src="cdn/angular-1.3.15/angular-route.min.js"></script>
@@ -53,78 +52,58 @@
 
 <body ng-controller="mainController">
 
-<!-- Fixed navbar -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <h3 class="navbar-text">SPA Example
-                <small>Powered by MEAN</small>
-            </h3>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" id="appsMenu" data-toggle="dropdown" href="#"><i class="fa fa-coffee"></i> Apps<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="appsMenu">
-                        <li role="presentation">
-                            <a role="menuitem" tabindex="-1" href="/myApps/contacts"><i class="fa fa-users"></i> Contacts</a>
-                        </li>
-                        <li role="presentation">
-                            <a role="menuitem" tabindex="-1" href="/myApps/calendar"><i class="fa fa-calendar"></i> Calendar</a>
-                        </li>
-                        <li role="presentation">
-                            <a role="menuitem" tabindex="-1" href="/myApps/documents"><i class="fa fa-cloud"></i> Documents</a>
-                        </li>
-                        <li role="presentation">
-                            <a role="menuitem" tabindex="-1" href="/myApps/training"><i class="fa fa-graduation-cap"></i> Training</a>
-                        </li>
-                        <li role="presentation" class="divider"></li>
-                        <li role="presentation">
-                            <a role="menuitem" tabindex="-1" href="/myApps/support"><i class="fa fa-bug"></i> Report a problem</a>
-                        </li>
-                        <li role="presentation">
-                            <a role="menuitem" tabindex="-1" href="/myApps/feedback"><i class="fa fa-envelope"></i> Send us feedback</a>
-                        </li>
-                        <li role="presentation">
-                            <a role="menuitem" tabindex="-1" href="/myApps/survey"><i class="fa fa-pencil"></i> Take a survey</a>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href="/myApps/home"><i class="fa fa-home"></i> Home</a></li>
-                <li><a href="/myApps/about"><i class="fa fa-info"></i> About</a></li>
-                <li><a href="/myApps/help"><i class="fa fa-comment"></i> Help</a></li>
-                <li><a href="/myApps/settings"><i class="fa fa-cog"></i> Settings</a></li>
-            </ul>
-        </div>
-        <!--/.nav-collapse -->
+        <h3 class="navbar-text">SPA Example
+            <small>Powered by MEAN</small>
+        </h3>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" id="appsMenu" data-toggle="dropdown" href="#"><i class="fa fa-coffee"></i> Apps<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="appsMenu">
+                    <li role="presentation">
+                        <a role="menuitem" tabindex="-1" href="/myApps/contacts"><i class="fa fa-users"></i> Contacts</a>
+                    </li>
+                    <li role="presentation">
+                        <a role="menuitem" tabindex="-1" href="/myApps/calendar"><i class="fa fa-calendar"></i> Calendar</a>
+                    </li>
+                    <li role="presentation">
+                        <a role="menuitem" tabindex="-1" href="/myApps/documents"><i class="fa fa-cloud"></i> Documents</a>
+                    </li>
+                    <li role="presentation">
+                        <a role="menuitem" tabindex="-1" href="/myApps/training"><i class="fa fa-graduation-cap"></i> Training</a>
+                    </li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation">
+                        <a role="menuitem" tabindex="-1" href="/myApps/support"><i class="fa fa-bug"></i> Report a problem</a>
+                    </li>
+                    <li role="presentation">
+                        <a role="menuitem" tabindex="-1" href="/myApps/feedback"><i class="fa fa-envelope"></i> Send us feedback</a>
+                    </li>
+                    <li role="presentation">
+                        <a role="menuitem" tabindex="-1" href="/myApps/survey"><i class="fa fa-pencil"></i> Take a survey</a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="/myApps/home"><i class="fa fa-home"></i> Home</a></li>
+            <li><a href="/myApps/about"><i class="fa fa-info"></i> About</a></li>
+            <li><a href="/myApps/help"><i class="fa fa-comment"></i> Help</a></li>
+            <li><a href="/myApps/settings"><i class="fa fa-cog"></i> Settings</a></li>
+        </ul>
     </div>
 </nav>
 
-<div id="jim-content">
+<header class="jumbotron">
+    <div id="headerContent" class="container"></div>
+</header>
 
-    <header class="jim-botron collapse in">
-        <div id="headerContent" class="container"></div>
-    </header>
+<main ng-view></main>
 
-    <main id="jim-main" ng-view></main>
+<hr>
 
-    <hr>
-
-    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="header">
-        collapsible header
-    </button>
-
-    <footer class="container">
-        <p>&copy; My Company {{ copyrightDate | date:"yyyy" }}</p>
-    </footer>
-
-</div>
+<footer class="container">
+    <p>&copy; My Company {{ copyrightDate | date:"yyyy" }}</p>
+</footer>
 
 </body>
 
