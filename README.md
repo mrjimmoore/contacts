@@ -1,3 +1,3 @@
 # My Apps
 
-### Example single page application with RESTful API using MEAN stack
+### Example single page application with RESTful API using MEAN stack.
