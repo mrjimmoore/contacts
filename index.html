@@ -112,13 +112,15 @@
         <div id="headerContent" class="container"></div>
     </header>
 
+    <div id="jim-botron-collapse" data-toggle="collapse" data-target="header">
+        <div class="container">
+            <i class="fa fa-angle-double-up fa-lg"></i>
+        </div>
+    </div>
+
     <main id="jim-main" ng-view></main>
 
     <hr>
-
-    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="header">
-        collapsible header
-    </button>
 
     <footer class="container">
         <p>&copy; My Company {{ copyrightDate | date:"yyyy" }}</p>
