@@ -1,0 +1,69 @@
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+#jim-botron-content {
+    top: 50px;
+}
+
+#jim-botron-main {
+    margin-top: 0px;
+}
+
+#jim-botron-collapse {
+    margin: 0px;
+    padding-top: 0px;
+    color: inherit;
+    background-color: #eee;
+}
+
+.jim-botron {
+    padding: 30px 15px 20px;
+    border: 0px;
+    margin: 0px;
+    color: inherit;
+    background-color: #eee;
+}
+
+.jim-botron h1,
+.jim-botron .h1 {
+    color: inherit;
+}
+
+.jim-botron p {
+    margin-bottom: 15px;
+    font-size: 21px;
+    font-weight: 200;
+}
+
+.jim-botron > hr {
+    border-top-color: #d5d5d5;
+}
+
+.container .jim-botron,
+.container-fluid .jim-botron {
+    border-radius: 6px;
+}
+
+.jim-botron .container {
+    max-width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+    .jim-botron {
+        padding: 48px 0;
+    }
+
+    .container .jim-botron,
+    .container-fluid .jim-botron {
+        padding-right: 60px;
+        padding-left: 60px;
+    }
+
+    .jim-botron h1,
+    .jim-botron .h1 {
+        font-size: 63px;
+    }
+}
