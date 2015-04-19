@@ -57,9 +57,9 @@
             <a class="navbar-brand" href="#">My Apps
                 <small>Powered by Jimbotron</small>
             </a>
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <a href="#" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <i class="fa fa-bars fa-inverse"></i>
-            </button>
+            </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -95,37 +95,34 @@
                 <li><a href="/myApps/help"><i class="fa fa-comment"></i> Help</a></li>
                 <li><a href="/myApps/settings"><i class="fa fa-cog"></i> Settings</a></li>
             </ul>
-        </div> <!--/.nav-collapse -->
+        </div>
+        <!--/.nav-collapse -->
     </div>
 </nav>
 
-<div id="jim-botron-content">
+<header class="jim-botron collapse in">
+    <div id="headerContent" class="container"></div>
+</header>
 
-    <header class="jim-botron collapse in">
-        <div id="headerContent" class="container"></div>
-    </header>
-
-    <div id="jim-botron-collapse">
-        <div class="container">
-            <a href="#"
-               ng-model="jimbotronCollapsed"
-               ng-click="jimbotronCollapsed = !jimbotronCollapsed;"
-               data-toggle="collapse"
-               data-target="header">
-                <i ng-class="jimbotronCollapsed ? 'fa fa-angle-double-down fa-lg' : 'fa fa-angle-double-up fa-lg'"></i>
-            </a>
-        </div>
+<div id="jim-botron-collapse">
+    <div class="container">
+        <a href="#"
+           ng-model="jimbotronCollapsed"
+           ng-click="jimbotronCollapsed = !jimbotronCollapsed;"
+           data-toggle="collapse"
+           data-target="header">
+            <i ng-class="jimbotronCollapsed ? 'fa fa-angle-double-down fa-lg' : 'fa fa-angle-double-up fa-lg'"></i>
+        </a>
     </div>
-
-    <main id="jim-botron-main" ng-view></main>
-
-    <hr>
-
-    <footer class="container">
-        <p>&copy; My Company {{ copyrightDate | date:"yyyy" }}</p>
-    </footer>
-
 </div>
+
+<main id="jim-botron-main" ng-view></main>
+
+<hr>
+
+<footer class="container">
+    <p>&copy; My Company {{ copyrightDate | date:"yyyy" }}</p>
+</footer>
 
 </body>
 
