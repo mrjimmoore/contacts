@@ -114,10 +114,13 @@
 
     <div id="jim-botron-collapse">
         <div class="container">
-            <i ng-model="jimbotronCollapsed"
+            <a href="#"
+               ng-model="jimbotronCollapsed"
                ng-click="jimbotronCollapsed = !jimbotronCollapsed;"
-               ng-class="jimbotronCollapsed ? 'fa fa-angle-double-down fa-lg' : 'fa fa-angle-double-up fa-lg'"
-               data-toggle="collapse" data-target="header"></i>
+               data-toggle="collapse"
+               data-target="header">
+                <i ng-class="jimbotronCollapsed ? 'fa fa-angle-double-down fa-lg' : 'fa fa-angle-double-up fa-lg'"></i>
+            </a>
         </div>
     </div>
 
