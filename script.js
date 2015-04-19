@@ -7,6 +7,7 @@ var app = angular.module("myApps", ["ngRoute"]);
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when("/", {templateUrl: "home.html", controller: "homeController"})
+        .when("/company", {templateUrl: "company/home.html", controller: "companyController"})
         .when("/about", {templateUrl: "about.html", controller: "aboutController"})
         .when("/help", {templateUrl: "help.html", controller: "helpController"})
         .when("/settings", {templateUrl: "settings/home.html", controller: "settingsController"})
