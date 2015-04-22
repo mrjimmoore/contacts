@@ -8,9 +8,14 @@ body {
     margin-top: 20px;
 }
 
+#jim-botron-nav-collapsed-options {
+    padding: 15px;
+    border: none;
+    margin: 0px;
+}
+
 #jim-botron-collapse {
     margin: 0px;
-    padding-top: 0px;
     color: inherit;
     background-color: #eee;
 }
@@ -49,7 +54,7 @@ body {
 
 @media screen and (min-width: 768px) {
     .jim-botron {
-        padding: 48px 0;
+        padding: 30px 0;
     }
 
     .container .jim-botron,
