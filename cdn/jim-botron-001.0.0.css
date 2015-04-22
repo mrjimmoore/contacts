@@ -8,6 +8,8 @@ body {
     margin-top: 20px;
 }
 
+#jim-botron-button {border: none; padding: 0px; }
+
 #jim-botron-collapse {
     margin: 0px;
     padding-top: 0px;
