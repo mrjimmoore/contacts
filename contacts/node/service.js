@@ -5,11 +5,11 @@ var cors = require("cors");
 
 mongoose.connect("mongodb://localhost/myApps");
 
-var contactSchema = { fullname: String, email: String, notes: String };
+var contactSchema = {fullname: String, email: String, notes: String};
 var contactModel = mongoose.model("contact", contactSchema, "contact");
 
 var app = express();
-app.use(require("body-parser").urlencoded({ extended: true }));
+app.use(require("body-parser").urlencoded({extended: true}));
 app.use(require("body-parser").json());
 app.use(cors());
 
@@ -55,13 +55,16 @@ app.get("/contacts", function (req, res) {
     console.log("sortColumn string: %s", sortColumn);
     console.log("sortDirection string: %s", sortDirection);
 
-    contactModel.find(searchCriteria).sort([[sortColumn, sortDirection]]).exec(function (err, docs) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.json(docs);
-        }
-    });
+    contactModel.find(searchCriteria)
+        //.limit(2)
+        .sort([[sortColumn, sortDirection]])
+        .exec(function (err, docs) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.json(docs);
+            }
+        });
 });
 
 // find a contact by _id

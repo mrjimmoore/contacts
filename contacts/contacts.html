@@ -1,15 +1,19 @@
 <article>
 
     <section class="container">
-        <p class="lead"><a href="/myApps/contacts/contact"><i class="fa fa-user-plus"></i></a>&nbsp;Add New Contact</p>
+        <div class="lead">
+            <a href="/myApps/contacts/contact"><i class="fa fa-user-plus"></i></a>&nbsp;Add New Contact
+            <span class="navbar-form navbar-right" role="search" ng-model="searchCriteria">
+                <span class="input-group" role="search">
+                    <input type="text" class="form-control" placeholder="Search" ng-model="searchCriteria.fullname">
 
-        <div class="navbar-form" role="search" ng-model="searchCriteria">
-            <div class="input-group" role="search">
-                <input type="text" class="form-control" placeholder="Search" ng-model="searchCriteria.fullname">
-                <div class="input-group-btn">
-                    <button class="btn btn-default" ng-click="findContacts()"><i class="glyphicon glyphicon-search"></i></button>
-                </div>
-            </div>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="findContacts()">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </span>
+                </span>
+            </span>
         </div>
     </section>
 
