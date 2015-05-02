@@ -5,13 +5,17 @@ app.controller("contactsController", function ($scope, $window, contactsDataFact
     getContacts();
 
     function getContacts() {
-        contactsDataFactory.getContactsSorted($scope.sortColumn, $scope.sortDescending)
+        contactsDataFactory.getContactsSorted($scope.searchCriteria, $scope.sortColumn, $scope.sortDescending)
             .success(function (docs) {
                 $scope.contacts = docs;
             })
             .error(function (err) {
                 alert("Unable to load data: " + err.message);
             });
+    }
+
+    $scope.findContacts = function () {
+        getContacts();
     }
 
     $scope.deleteContact = function (index) {
