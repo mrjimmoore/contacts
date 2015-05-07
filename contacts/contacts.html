@@ -49,8 +49,11 @@
 
         </table>
 
-        <button ng-click="getPreviousPage();">Previous</button>
-        <button ng-click="getNextPage();">Next</button>
+        <button ng-click="getFirstPage();"><i class="fa fa-angle-double-left"></i></button>
+        <button ng-click="getPreviousPage();"><i class="fa fa-angle-left"></i></button>
+        Page {{pagesToSkip + 1}} of ????
+        <button ng-click="getNextPage();"><i class="fa fa-angle-right"></i></button>
+        <button ng-click="getLastPage();"><i class="fa fa-angle-double-right"></i></button>
     </section>
 
 </article>

@@ -26,6 +26,11 @@ app.controller("contactsController", function ($scope, $window, contactsDataFact
         getContacts();
     }
 
+    $scope.getFirstPage = function () {
+        $scope.pagesToSkip = 0;
+        getContacts();
+    }
+
     $scope.getPreviousPage = function () {
         $scope.pagesToSkip--;
         if ($scope.pagesToSkip < 0) {
@@ -39,6 +44,22 @@ app.controller("contactsController", function ($scope, $window, contactsDataFact
         getContacts();
     }
 
+    $scope.getLastPage = function () {
+        $scope.pagesToSkip++;
+        getContacts();
+    }
+
+    $scope.changeSorting = function (columnName) {
+        $scope.pagesToSkip = 0;
+        if (columnName == $scope.sortColumn) {
+            $scope.sortDescending = !$scope.sortDescending;
+        } else {
+            $scope.sortColumn = columnName;
+            $scope.sortDescending = false;
+        }
+        getContacts();
+    }
+
     $scope.deleteContact = function (index) {
         contactsDataFactory.deleteContact($scope.contacts[index]._id)
             .success(function () {
@@ -48,16 +69,6 @@ app.controller("contactsController", function ($scope, $window, contactsDataFact
                 alert("Unable to delete document: " + err.message);
             });
     };
-
-    $scope.changeSorting = function (columnName) {
-        if (columnName == $scope.sortColumn) {
-            $scope.sortDescending = !$scope.sortDescending;
-        } else {
-            $scope.sortColumn = columnName;
-            $scope.sortDescending = false;
-        }
-        getContacts();
-    }
 });
 
 app.controller("contactController", function ($scope, $routeParams, contactsDataFactory) {
