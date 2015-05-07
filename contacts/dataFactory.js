@@ -6,13 +6,15 @@ app.factory("contactsDataFactory", ["$http", function ($http) {
         return $http.get(urlBase);
     };
 
-    contactsDataFactory.getContactsSorted = function (searchCriteria, sortColumn, sortDescending) {
+    contactsDataFactory.getContactsSorted = function (searchCriteria, sortColumn, sortDescending, pagesToSkip, rowsPerPage) {
         //return $http.get(urlBase + "/" + searchCriteria + "/" + sortColumn + "/" + (sortDescending ? "descending" : "ascending"));
         return $http.get(urlBase, {
             params: {
                 "searchCriteria": searchCriteria,
                 "sortColumn": sortColumn,
-                "sortDirection": (sortDescending ? "descending" : "ascending")
+                "sortDescending": sortDescending,
+                "pagesToSkip": pagesToSkip,
+                "rowsPerPage": rowsPerPage
             }
         });
     };

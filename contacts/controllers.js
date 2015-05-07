@@ -2,10 +2,12 @@ app.controller("contactsController", function ($scope, $window, contactsDataFact
     $("#headerContent").load("contacts/header.html");
     $scope.sortColumn = "fullname";
     $scope.sortDescending = false;
+    $scope.pagesToSkip = 0;
+    $scope.rowsPerPage = 3;
     getContacts();
 
     function getContacts() {
-        contactsDataFactory.getContactsSorted($scope.searchCriteria, $scope.sortColumn, $scope.sortDescending)
+        contactsDataFactory.getContactsSorted($scope.searchCriteria, $scope.sortColumn, $scope.sortDescending, $scope.pagesToSkip, $scope.rowsPerPage)
             .success(function (docs) {
                 $scope.contacts = docs;
             })
@@ -15,6 +17,25 @@ app.controller("contactsController", function ($scope, $window, contactsDataFact
     }
 
     $scope.findContacts = function () {
+        $scope.pagesToSkip = 0;
+
+        // Clear searchCriteria if there is no fullname provided
+        if ($scope.searchCriteria.fullname == "" || $scope.searchCriteria.fullname == null) {
+            $scope.searchCriteria = null;
+        }
+        getContacts();
+    }
+
+    $scope.getPreviousPage = function () {
+        $scope.pagesToSkip--;
+        if ($scope.pagesToSkip < 0) {
+            $scope.pagesToSkip = 0;
+        }
+        getContacts();
+    }
+
+    $scope.getNextPage = function () {
+        $scope.pagesToSkip++;
         getContacts();
     }
 
