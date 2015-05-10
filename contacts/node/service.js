@@ -26,7 +26,7 @@ app.use(cors());
 //    });
 //});
 
-// find all contacts by criteria and sorted
+// find all contacts by page using selection criteria and sorted
 app.get("/contactsByPageAndSorted", function (req, res) {
     var searchCriteria = JSON.parse(req.param("searchCriteria", "[]"));
     var sortColumn = req.param("sortColumn", "fullname");
