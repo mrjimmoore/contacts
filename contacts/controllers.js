@@ -2,19 +2,67 @@ app.controller("contactsController", function ($scope, $window, contactsDataFact
     $("#headerContent").load("contacts/header.html");
     $scope.sortColumn = "fullname";
     $scope.sortDescending = false;
+    $scope.pagesToSkip = 0;
+    $scope.rowsPerPage = 3;
     getContacts();
 
     function getContacts() {
-        contactsDataFactory.getContactsSorted($scope.searchCriteria, $scope.sortColumn, $scope.sortDescending)
-            .success(function (docs) {
-                $scope.contacts = docs;
+        contactsDataFactory.getContactsByPageAndSorted(
+            $scope.searchCriteria,
+            $scope.sortColumn,
+            $scope.sortDescending,
+            $scope.pagesToSkip,
+            $scope.rowsPerPage)
+            .success(function (results) {
+                $scope.contacts = results.docs;
+                $scope.totalPages = Math.ceil(results.docCount / $scope.rowsPerPage);
             })
             .error(function (err) {
                 alert("Unable to load data: " + err.message);
             });
     }
 
-    $scope.findContacts = function () {
+    $scope.searchContacts = function () {
+        $scope.pagesToSkip = 0;
+
+        // Clear searchCriteria if there is no fullname provided
+        if ($scope.searchCriteria.fullname == "" || $scope.searchCriteria.fullname == null) {
+            $scope.searchCriteria = null;
+        }
+        getContacts();
+    }
+
+    $scope.getFirstPage = function () {
+        $scope.pagesToSkip = 0;
+        getContacts();
+    }
+
+    $scope.getPreviousPage = function () {
+        $scope.pagesToSkip--;
+        if ($scope.pagesToSkip < 0) {
+            $scope.pagesToSkip = 0;
+        }
+        getContacts();
+    }
+
+    $scope.getNextPage = function () {
+        $scope.pagesToSkip++;
+        getContacts();
+    }
+
+    $scope.getLastPage = function () {
+        $scope.pagesToSkip = -1;  // negative one indicates goto last page
+        getContacts();
+    }
+
+    $scope.changeSorting = function (columnName) {
+        $scope.pagesToSkip = 0;
+        if (columnName == $scope.sortColumn) {
+            $scope.sortDescending = !$scope.sortDescending;
+        } else {
+            $scope.sortColumn = columnName;
+            $scope.sortDescending = false;
+        }
         getContacts();
     }
 
@@ -27,16 +75,6 @@ app.controller("contactsController", function ($scope, $window, contactsDataFact
                 alert("Unable to delete document: " + err.message);
             });
     };
-
-    $scope.changeSorting = function (columnName) {
-        if (columnName == $scope.sortColumn) {
-            $scope.sortDescending = !$scope.sortDescending;
-        } else {
-            $scope.sortColumn = columnName;
-            $scope.sortDescending = false;
-        }
-        getContacts();
-    }
 });
 
 app.controller("contactController", function ($scope, $routeParams, contactsDataFactory) {

@@ -4,7 +4,7 @@
         <div class="lead">
             <a href="/myApps/contacts/contact"><i class="fa fa-user-plus"></i></a>&nbsp;Add New Contact
             <span class="navbar-form navbar-right" role="search" ng-model="searchCriteria">
-                <form ng-submit="findContacts()" class="input-group" role="search">
+                <form ng-submit="searchContacts()" class="input-group" role="search">
                     <input type="text" class="form-control" placeholder="Search..." ng-model="searchCriteria.fullname">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="submit">
@@ -48,6 +48,12 @@
             </tbody>
 
         </table>
+
+        <button ng-click="getFirstPage();"><i class="fa fa-angle-double-left"></i></button>
+        <button ng-click="getPreviousPage();"><i class="fa fa-angle-left"></i></button>
+        Page {{ pagesToSkip + 1 }} of {{ totalPages }}
+        <button ng-click="getNextPage();"><i class="fa fa-angle-right"></i></button>
+        <button ng-click="getLastPage();"><i class="fa fa-angle-double-right"></i></button>
     </section>
 
 </article>
