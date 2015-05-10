@@ -32,7 +32,7 @@ app.get("/contactsByPageAndSorted", function (req, res) {
     var sortColumn = req.param("sortColumn", "fullname");
     var sortDescending = JSON.parse(req.param("sortDescending", "false").toLowerCase());  // convert to boolean
     var pagesToSkip = req.param("pagesToSkip", 0);
-    var rowsPerPage = req.param("rowsPerPage", 5);
+    var rowsPerPage = req.param("rowsPerPage", 20);
     var rowsToSkip = rowsPerPage * pagesToSkip;
     var results = {};  // results to be returned on by callback
 
@@ -55,7 +55,7 @@ app.get("/contactsByPageAndSorted", function (req, res) {
         }
     });
 
-    // get the documents returned for the page
+    // get the requested page of documents
     contactModel
         .find(searchCriteria)
         .sort([[sortColumn, sortDescending ? "descending" : "ascending"]])
