@@ -47,11 +47,13 @@
 
         </table>
 
-        <button ng-click="getPage(0);" ng-disabled="currentPage > 1 ? false : true"><i class="fa fa-angle-double-left"></i></button>
-        <button ng-click="getPage(1);" ng-disabled="currentPage > 1 ? false : true"><i class="fa fa-angle-left"></i></button>
-        Page {{ currentPage }} of {{ totalPages }}
-        <button ng-click="getPage(2);" ng-disabled="currentPage < totalPages ? false : true"><i class="fa fa-angle-right"></i></button>
-        <button ng-click="getPage(3);" ng-disabled="currentPage < totalPages ? false : true"><i class="fa fa-angle-double-right"></i></button>
+        <div class="form-group">
+            <button class="btn btn-default" ng-click="getPage(0);" ng-disabled="currentPage > 1 ? false : true"><i class="fa fa-angle-double-left"></i></button>
+            <button class="btn btn-default" ng-click="getPage(1);" ng-disabled="currentPage > 1 ? false : true"><i class="fa fa-angle-left"></i></button>
+            &nbsp;Page {{ currentPage }} of {{ totalPages }}&nbsp;
+            <button class="btn btn-default" ng-click="getPage(2);" ng-disabled="currentPage < totalPages ? false : true"><i class="fa fa-angle-right"></i></button>
+            <button class="btn btn-default" ng-click="getPage(3);" ng-disabled="currentPage < totalPages ? false : true"><i class="fa fa-angle-double-right"></i></button>
+        </div>
     </section>
 
 </article>

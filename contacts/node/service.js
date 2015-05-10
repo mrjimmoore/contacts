@@ -36,7 +36,7 @@ app.get("/contactsByPageAndSorted", function (req, res) {
     var rowsToSkip = rowsPerPage * pagesToSkip;
     var results = {};  // results to be returned on by callback
 
-    console.log("---------- " + new Date().toLocaleTimeString() + " ----------");
+    //console.log("---------- " + new Date().toLocaleTimeString() + " ----------");
 
     // get the count of documents meeting the search criteria (not the count returned for the page)
     contactModel.count(searchCriteria, function (err, count) {

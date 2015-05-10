@@ -3,7 +3,7 @@ app.controller("contactsController", function ($scope, $window, contactsDataFact
     $scope.sortColumn = "fullname";
     $scope.sortDescending = false;
     $scope.currentPage = 1;
-    $scope.rowsPerPage = 3;
+    $scope.rowsPerPage = 10;
     pagesToSkip = 0;
     getContacts();
 
