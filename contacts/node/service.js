@@ -36,7 +36,7 @@ app.get("/contactsByPageAndSorted", function (req, res) {
     var rowsToSkip = rowsPerPage * pagesToSkip;
     var results = {};  // results to be returned on by callback
 
-    console.log("--------------------------------");
+    console.log("--------------------------------" + new Date().toLocaleTimeString());
     //console.log("req.params string: %s", req.params)
     //console.log("req.params JSON: %j", req.params);
     //console.log("searchCriteria string: %s", searchCriteria);
