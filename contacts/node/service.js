@@ -26,25 +26,17 @@ app.use(cors());
 //    });
 //});
 
-// find all contacts by criteria and sorted
+// find all contacts by page using selection criteria and sorted
 app.get("/contactsByPageAndSorted", function (req, res) {
     var searchCriteria = JSON.parse(req.param("searchCriteria", "[]"));
     var sortColumn = req.param("sortColumn", "fullname");
     var sortDescending = JSON.parse(req.param("sortDescending", "false").toLowerCase());  // convert to boolean
     var pagesToSkip = req.param("pagesToSkip", 0);
-    var rowsPerPage = req.param("rowsPerPage", 5);
+    var rowsPerPage = req.param("rowsPerPage", 20);
     var rowsToSkip = rowsPerPage * pagesToSkip;
     var results = {};  // results to be returned on by callback
 
-    console.log("--------------------------------" + new Date().toLocaleTimeString());
-    //console.log("req.params string: %s", req.params)
-    //console.log("req.params JSON: %j", req.params);
-    //console.log("searchCriteria string: %s", searchCriteria);
-    //console.log("searchCriteria JSON: %j", searchCriteria);
-    //console.log("sortColumn: %s", sortColumn);
-    //console.log("sortDescending: %s", sortDescending);
-    //console.log("pagesToSkip: %s", pagesToSkip);
-    //console.log("rowsPerPage: %s", rowsPerPage);
+    console.log("---------- " + new Date().toLocaleTimeString() + " ----------");
 
     // get the count of documents meeting the search criteria (not the count returned for the page)
     contactModel.count(searchCriteria, function (err, count) {
@@ -55,7 +47,7 @@ app.get("/contactsByPageAndSorted", function (req, res) {
         }
     });
 
-    // get the documents returned for the page
+    // get the requested page of documents
     contactModel
         .find(searchCriteria)
         .sort([[sortColumn, sortDescending ? "descending" : "ascending"]])
