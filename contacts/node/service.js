@@ -36,15 +36,7 @@ app.get("/contactsByPageAndSorted", function (req, res) {
     var rowsToSkip = rowsPerPage * pagesToSkip;
     var results = {};  // results to be returned on by callback
 
-    console.log("--------------------------------" + new Date().toLocaleTimeString());
-    //console.log("req.params string: %s", req.params)
-    //console.log("req.params JSON: %j", req.params);
-    //console.log("searchCriteria string: %s", searchCriteria);
-    //console.log("searchCriteria JSON: %j", searchCriteria);
-    //console.log("sortColumn: %s", sortColumn);
-    //console.log("sortDescending: %s", sortDescending);
-    //console.log("pagesToSkip: %s", pagesToSkip);
-    //console.log("rowsPerPage: %s", rowsPerPage);
+    console.log("---------- " + new Date().toLocaleTimeString() + " ----------");
 
     // get the count of documents meeting the search criteria (not the count returned for the page)
     contactModel.count(searchCriteria, function (err, count) {

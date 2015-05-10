@@ -7,9 +7,7 @@
                 <form ng-submit="searchContacts()" class="input-group" role="search">
                     <input type="text" class="form-control" placeholder="Search..." ng-model="searchCriteria.fullname">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="submit">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </button>
+                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                     </span>
                 </form>
             </span>
@@ -49,11 +47,11 @@
 
         </table>
 
-        <button ng-click="getFirstPage();" ng-disabled="pagesToSkip > 0? false : true"><i class="fa fa-angle-double-left"></i></button>
-        <button ng-click="getPreviousPage();" ng-disabled="pagesToSkip > 0? false : true"><i class="fa fa-angle-left"></i></button>
-        Page {{ pagesToSkip + 1 }} of {{ totalPages }}
-        <button ng-click="getNextPage();" ng-disabled="(pagesToSkip + 1) < totalPages ? false : true"><i class="fa fa-angle-right"></i></button>
-        <button ng-click="getLastPage();" ng-disabled="(pagesToSkip + 1) < totalPages ? false : true"><i class="fa fa-angle-double-right"></i></button>
+        <button ng-click="getPage(0);" ng-disabled="currentPage > 1 ? false : true"><i class="fa fa-angle-double-left"></i></button>
+        <button ng-click="getPage(1);" ng-disabled="currentPage > 1 ? false : true"><i class="fa fa-angle-left"></i></button>
+        Page {{ currentPage }} of {{ totalPages }}
+        <button ng-click="getPage(2);" ng-disabled="currentPage < totalPages ? false : true"><i class="fa fa-angle-right"></i></button>
+        <button ng-click="getPage(3);" ng-disabled="currentPage < totalPages ? false : true"><i class="fa fa-angle-double-right"></i></button>
     </section>
 
 </article>

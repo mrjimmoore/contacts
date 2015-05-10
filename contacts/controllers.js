@@ -2,8 +2,9 @@ app.controller("contactsController", function ($scope, $window, contactsDataFact
     $("#headerContent").load("contacts/header.html");
     $scope.sortColumn = "fullname";
     $scope.sortDescending = false;
-    $scope.pagesToSkip = 0;
+    $scope.currentPage = 1;
     $scope.rowsPerPage = 3;
+    pagesToSkip = 0;
     getContacts();
 
     function getContacts() {
@@ -11,11 +12,12 @@ app.controller("contactsController", function ($scope, $window, contactsDataFact
             $scope.searchCriteria,
             $scope.sortColumn,
             $scope.sortDescending,
-            $scope.pagesToSkip,
+            pagesToSkip,
             $scope.rowsPerPage)
             .success(function (results) {
                 $scope.contacts = results.docs;
                 $scope.totalPages = Math.ceil(results.docCount / $scope.rowsPerPage);
+                $scope.currentPage = pagesToSkip == -1 ? $scope.totalPages : pagesToSkip + 1;
             })
             .error(function (err) {
                 alert("Unable to load data: " + err.message);
@@ -23,7 +25,7 @@ app.controller("contactsController", function ($scope, $window, contactsDataFact
     }
 
     $scope.searchContacts = function () {
-        $scope.pagesToSkip = 0;
+        pagesToSkip = 0;
 
         // Clear searchCriteria if there is no fullname provided
         if ($scope.searchCriteria.fullname == "" || $scope.searchCriteria.fullname == null) {
@@ -32,31 +34,32 @@ app.controller("contactsController", function ($scope, $window, contactsDataFact
         getContacts();
     }
 
-    $scope.getFirstPage = function () {
-        $scope.pagesToSkip = 0;
-        getContacts();
-    }
-
-    $scope.getPreviousPage = function () {
-        $scope.pagesToSkip--;
-        if ($scope.pagesToSkip < 0) {
-            $scope.pagesToSkip = 0;
+    $scope.getPage = function (pageOption) {
+        switch (pageOption) {
+            case 0:  // get the first page
+                pagesToSkip = 0;
+                break;
+            case 1:  // get previous page
+                pagesToSkip = $scope.currentPage < 2 ? 0 : $scope.currentPage - 2;
+                break;
+            case 2:  // get next page
+                pagesToSkip = $scope.currentPage < $scope.totalPages ? $scope.currentPage : $scope.totalPages - 1;
+                break;
+            case 3:  // get last page
+                pagesToSkip = $scope.totalPages - 1;
+                break;
+            default:  // default to get the first page (should use 0)
+                pagesToSkip = 0;
+                break;
         }
-        getContacts();
-    }
 
-    $scope.getNextPage = function () {
-        $scope.pagesToSkip++;
-        getContacts();
-    }
-
-    $scope.getLastPage = function () {
-        $scope.pagesToSkip = -1;  // negative one indicates goto last page
+        // make sure we don't have a negative pagesToSkip
+        pagesToSkip = pagesToSkip < 0 ? 0 : pagesToSkip;
         getContacts();
     }
 
     $scope.changeSorting = function (columnName) {
-        $scope.pagesToSkip = 0;
+        pagesToSkip = 0;
         if (columnName == $scope.sortColumn) {
             $scope.sortDescending = !$scope.sortDescending;
         } else {
