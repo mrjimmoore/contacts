@@ -27,13 +27,14 @@ app.use(cors());
 //});
 
 // find all contacts by criteria and sorted
-app.get("/contacts", function (req, res) {
+app.get("/contactsByPageAndSorted", function (req, res) {
     var searchCriteria = JSON.parse(req.param("searchCriteria", "[]"));
     var sortColumn = req.param("sortColumn", "fullname");
     var sortDescending = JSON.parse(req.param("sortDescending", "false").toLowerCase());  // convert to boolean
     var pagesToSkip = req.param("pagesToSkip", 0);
     var rowsPerPage = req.param("rowsPerPage", 5);
     var rowsToSkip = rowsPerPage * pagesToSkip;
+    var results = {};  // results to be returned on by callback
 
     console.log("--------------------------------");
     //console.log("req.params string: %s", req.params)
@@ -42,19 +43,30 @@ app.get("/contacts", function (req, res) {
     //console.log("searchCriteria JSON: %j", searchCriteria);
     //console.log("sortColumn: %s", sortColumn);
     //console.log("sortDescending: %s", sortDescending);
-    console.log("pagesToSkip: %s", pagesToSkip);
-    console.log("rowsPerPage: %s", rowsPerPage);
+    //console.log("pagesToSkip: %s", pagesToSkip);
+    //console.log("rowsPerPage: %s", rowsPerPage);
 
+    // get the count of documents meeting the search criteria (not the count returned for the page)
+    contactModel.count(searchCriteria, function (err, count) {
+        if (err) {
+            console.log(err);
+        } else {
+            results.docCount = count;
+        }
+    });
+
+    // get the documents returned for the page
     contactModel
         .find(searchCriteria)
         .sort([[sortColumn, sortDescending ? "descending" : "ascending"]])
-        .skip(rowsToSkip)
+        .skip(pagesToSkip >= 0 ? (pagesToSkip * rowsPerPage) : 0)
         .limit(rowsPerPage)
         .exec(function (err, docs) {
             if (err) {
                 console.log(err);
             } else {
-                res.json(docs);
+                results.docs = docs;
+                res.json(results);
             }
         });
 });

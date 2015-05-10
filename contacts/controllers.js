@@ -7,16 +7,22 @@ app.controller("contactsController", function ($scope, $window, contactsDataFact
     getContacts();
 
     function getContacts() {
-        contactsDataFactory.getContactsSorted($scope.searchCriteria, $scope.sortColumn, $scope.sortDescending, $scope.pagesToSkip, $scope.rowsPerPage)
-            .success(function (docs) {
-                $scope.contacts = docs;
+        contactsDataFactory.getContactsByPageAndSorted(
+            $scope.searchCriteria,
+            $scope.sortColumn,
+            $scope.sortDescending,
+            $scope.pagesToSkip,
+            $scope.rowsPerPage)
+            .success(function (results) {
+                $scope.contacts = results.docs;
+                $scope.totalPages = Math.ceil(results.docCount / $scope.rowsPerPage);
             })
             .error(function (err) {
                 alert("Unable to load data: " + err.message);
             });
     }
 
-    $scope.findContacts = function () {
+    $scope.searchContacts = function () {
         $scope.pagesToSkip = 0;
 
         // Clear searchCriteria if there is no fullname provided
@@ -45,7 +51,7 @@ app.controller("contactsController", function ($scope, $window, contactsDataFact
     }
 
     $scope.getLastPage = function () {
-        $scope.pagesToSkip++;
+        $scope.pagesToSkip = -1;  // negative one indicates goto last page
         getContacts();
     }
 
