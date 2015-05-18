@@ -1,6 +1,7 @@
 var express = require("express");
 var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
+var multer = require('multer');
 var cors = require("cors");
 
 mongoose.connect("mongodb://localhost/myApps");
@@ -9,8 +10,9 @@ var contactSchema = {fullname: String, email: String, notes: String};
 var contactModel = mongoose.model("contact", contactSchema, "contact");
 
 var app = express();
-app.use(require("body-parser").urlencoded({extended: true}));
-app.use(require("body-parser").json());
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(multer()); // for parsing multipart/form-data
 app.use(cors());
 
 //// find all contacts sorted
@@ -33,10 +35,15 @@ app.get("/contactsByPageAndSorted", function (req, res) {
     var sortDescending = JSON.parse(req.param("sortDescending", "false").toLowerCase());  // convert to boolean
     var pagesToSkip = req.param("pagesToSkip", 0);
     var rowsPerPage = req.param("rowsPerPage", 20);
-    var rowsToSkip = rowsPerPage * pagesToSkip;
     var results = {};  // results to be returned on by callback
 
-    //console.log("---------- " + new Date().toLocaleTimeString() + " ----------");
+    console.log("---------- " + new Date().toLocaleTimeString() + " ----------");
+    console.log(req.body);
+    console.log("searchCriteria: " + searchCriteria);
+    console.log("sortColumn: " + sortColumn);
+    console.log("sortDescending: " + sortDescending);
+    console.log("pagesToSkip: " + pagesToSkip);
+    console.log("rowsPerPage: " + rowsPerPage);
 
     // get the count of documents meeting the search criteria (not the count returned for the page)
     contactModel.count(searchCriteria, function (err, count) {
